@@ -1,4 +1,4 @@
 setTimeout(
-    () => alert('js working'),
+    () => alert("get ready to workout!"),
     1000*2
 )
