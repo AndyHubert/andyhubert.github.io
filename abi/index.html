@@ -1,7 +1,17 @@
 <html>
     <head>
-        <link rel="stylesheet" href="main.css">
-        <script src="main.js"></script>
+        <script>
+
+            const myScript = document.createElement('script')
+            myScript.setAttribute('src', `main.js?${Date.now()}`)
+            document.head.appendChild(myScript)
+
+            const link = document.createElement('link')
+            link.setAttribute('rel', 'stylesheet')
+            link.setAttribute('href', `main.css?${Date.now()}`)
+            document.head.appendChild(link)
+
+        </script>
     </head>
     <body>
         Abi!
