@@ -1,3 +1,30 @@
 body {
-    font-size: 50px;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.section {
+    border-bottom: 1px solid #444;
+    padding: 15px;
+}
+
+.section-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.section-label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.hide {
+    display: none;
+}
+
+input {
+    margin: 0 5px;
 }
