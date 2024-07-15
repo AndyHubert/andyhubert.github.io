@@ -1,4 +1,4 @@
 setTimeout(
-    () => alert('Sarah working'),
+    () => alert('What up, world!'),
     1000*2
 )
