@@ -14,6 +14,69 @@
         </script>
     </head>
     <body>
-        Sarah!
+
+        <div id="main-screen" class="screen">
+            <div class="card-container">
+                <div class="card card-bg"></div>
+                <div class="card card-bg"></div>
+                <div class="card card-bg"></div>
+                <div class="card">
+                    <div class="card-heading">Current Task</div>
+                    <div id="card-title"></div>
+                    <div id="card-description"></div>
+                    <div class="card-buttons">
+                        <button id="check-off">✓ Check</button>
+                        <button id="edit">Edit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-buttons">
+                <button id="previous">&lt;– Previous</button>
+                <button id="current">CURRENT</button>
+                <button id="next">Next –&gt;</button>
+            </div>
+            <div><button id="add-new">+ Add New Task</button></div>
+            <div><button id="view-history">View Task History</button></div>
+        </div>
+
+        <div id="screen-edit-task" class="screen hide">
+            <div class="screen-heading" id="edit-screen-heading">Edit Task</div>
+            <div class="card-container">
+                <div class="card">
+                    <div class="edit-heading">Title:</div>
+                    <div><input id="edit-title" /></div>
+                    <div class="edit-heading">Description:</div>
+                    <div><textarea id="edit-description"></textarea></div>
+                </div>
+            </div>
+            <div><button id="edit-done">Done</button></div>
+            <div><button id="delete">Delete</button></div>
+        </div>
+
+        <div id="screen-history" class="screen hide">
+            <div class="screen-heading">Task History</div>
+            <div id="history"></div>
+            <div><button id="history-back">Back</button></div>
+        </div>
+
+        <div id="screen-history-details" class="screen hide">
+            <div class="screen-heading">Task History Details</div>
+            <div id="history-details-title"></div>
+            <div id="history-details"></div>
+            <div><button id="history-details-back">Back</button></div>
+        </div>
+
+        <div id="screen-check" class="screen hide">
+            <div class="screen-heading">✓ Check</div>
+            <div class="card-container">
+                <div class="card">
+                    <div id="check-date"></div>
+                    <div class="edit-heading">Notes:</div>
+                    <div><textarea id="check-notes"></textarea></div>
+                </div>
+            </div>
+            <div><button id="check-done">Done</button></div>
+        </div>
+
     </body>
 </html>

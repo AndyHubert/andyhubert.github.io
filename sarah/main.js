@@ -1,7 +1,3 @@
-setTimeout(
-    () => alert('What up, world!'),
-    1000*2
-)
 
 let task = {
     title: ``,
