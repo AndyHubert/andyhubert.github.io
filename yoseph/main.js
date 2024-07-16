@@ -30,3 +30,4 @@ let SavingsNotes = document.querySelector(`#savings-expense-description`).value
 let StupidNotes = document.querySelector(`#stupid-expense-description`).value
 let SavingsSubtract = document.querySelector(`#savings-expense-amount`).value
 let StupidSubtract = document.querySelector(`#stupid-expense-amount`).value
+let PayAmount = document.querySelector(`#pay-amount`).value
