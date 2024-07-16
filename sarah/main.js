@@ -1,19 +1,47 @@
+//NOTES: testing at http-server
 
-let task = {
-    title: ``,
-    description: ``,
-    date: ``,
-    notes: ``,
-    idx: ``,
+//Global variables
+const taskStack = []                   //array of active tasks
+const historyList = []                 //array of history of completed tasks
+let currentTask                     //this will always be holding the id of the current task
+
+// let task = {
+//     title: ``,
+//     description: ``,
+//     date: ``,
+//     notes: ``,
+//     id: ``,
+// }
+
+const editTask = () => {
+    /*
+    Display edit form
+    if new task, all fields should be empty
+        create new task object
+    if editing task, fields should have data from id = whatever the id of the task was where edit was clicked
+    hide done button until title filled in
+    Allow to edit title
+    unhide done button as soon as title filled in
+    Allow to edit description
+    when Done selected ->
+        1)save data to task
+        2)if new, push new task to front of rotation...or give it an id that will put it where you want it???
+            return to displayCurrentTask with currentTask id = either new task or previous current task
+        3) if editing a task, return to displayCurrentTask viewing the task edited (whether it's the current task or not)
+    */
 }
 
-const currentTask = () => {
+const displayCurrentTask = () => {
     /*
-    Display the current task
+    Display the task with id = currentTask
+    when back arrow selected -> view previous task according to stack array
+    when forward arrow selected -> view next task according to stack array
+    flip button should only be selectable when viewing task with id = currentTask
+    edit button selectable for all tasks
     when Flip is selected -> send to flipNotes function
     when Edit is selected -> send to editTask function
     when Trash is selected -> send to deleteTask function
-    when Plus/Add selected -> send to newTask function
+    when Plus/Add selected -> send to editTask function
     when Rotation Rectod selected -> send to rotationRecord function
     */
 }
@@ -26,44 +54,20 @@ const flipNotes = () => {
     when Done is selected -> 
         1)notes are saved to that task's record 
         2)the instance is recorded on the Rotation Record
-        3)returns to currentTask function with next task showing
-    */
-}
-
-const editTask = () => {
-    /*
-    Display current card data (same format as newTask)
-    Allow change of title and description
-    (should there be a way to edit previous flip notes?)
-    when Done selected ->
-        1)titlePresent function
-    If titlePresent returns true
-        1)save data to task
-        2)return to currentTask with updated data
+        3)returns to displayCurrentTask function with next task showing
     */
 }
 
 const deleteTask = () => {
     /*
+    if(confirm(`Are you sure`)) {
+        // do it
+    }
     Alert - are you sure you want to delete this task?
     if yes -> 
         1)take task out of rotation, but don't delete data (it still needs to show up with notes in Rotation Record) 
-        2)return to currentTask with next task showing
+        2)return to displayCurrentTask with next task showing
     if no ->return (no action done)
-    */
-}
-
-const newTask = () => {
-    /*
-    Display New Card form
-    Allow editing of title and description
-    when Done selected ->
-        1)titlePresent function
-    If titlePresent returns true
-        1)save data to task
-        2)push new task to front of rotation
-        (should there be an option where to put task in rotation?)
-        2)return to currentTask with with new task showing
     */
 }
 
@@ -71,8 +75,7 @@ const rotationRecord = () => {
     /*
     Display Rotation Record
     If task selected -> taskRecord(selected task)
-    If date selected -> dateRecord(selected date)
-    If Done selected -> return to currentTask
+    If Done selected -> return to displayCurrentTask
     */
 }
 
@@ -83,19 +86,13 @@ const taskRecord = () => {
     */
 }
 
-const dateRecord = () => {
-    /*
-    Display tasks completed on selected date
-    if return selected -> return to rotationRecord
-    */
-}
 
-const titlePresent = () => {
-    /*
-    Check if current task has a title (blank spaces don't count)
-    if no title ->
-        1)alert user no title
-        2)return to edit/new task function as though done not selected
-    if title -> return true
-    */
-}
+// document.querySelector(`#screen-main`).classList.add(`hide`)
+// document.querySelector(`#screen-edit-task`).classList.remove(`hide`)
+// for inputs: .value
+// .addEventListener(`click`, () => {
+// })
+
+// document.querySelector(`#view-history`).disabled = true
+
+// localStorage
