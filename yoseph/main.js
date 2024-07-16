@@ -21,3 +21,10 @@ document.querySelector(`#savings-expense-enter`).addEventListener(() => {       
 })
     */
 
+let Savings = 0
+let Stupid = 0
+let Tithes = 0
+let SavingsNotes = document.querySelector(`#savings-expense-description`).value
+let StupidNotes = document.querySelector(`#stupid-expense-description`).value
+let SavingsSubtract = document.querySelector(`#savings-expense-amount`).value
+let StupidSubtract = document.querySelector(`#stupid-expense-amount`).value
