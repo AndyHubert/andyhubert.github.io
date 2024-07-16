@@ -1,7 +1,4 @@
-setTimeout(
-    () => alert('woooooo'),
-    1000*2
-)
+
 /*
 money in divide with math function
 a second subtractive function
@@ -12,3 +9,15 @@ history??? but how!? (continued):
 make both money and explenation a single string, then add to array? or...
 add both to object and add object to array?
 or give up!!!!!!!! (definitly this one)
+*/
+
+/* examples
+
+let currentVal = document.querySelector(`#savings-expense-description`).value   = input
+
+document.querySelector(`#savings-total`).innerHTML                              = output
+
+document.querySelector(`#savings-expense-enter`).addEventListener(() => {       = button
+})
+    */
+
