@@ -5,15 +5,28 @@ const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
 let currentTask                     //this will always be holding the id of the current task
 
-// let task = {
-//     title: ``,
-//     description: ``,
-//     date: ``,
-//     notes: ``,
-//     id: ``,
-// }
+const displayCurrentTask = () => {
+    console.log(taskStack.length)
+    if(taskStack.length === 0){
+        editTask()
+    }
+    /*
+    Display the task with id = currentTask
+    when back arrow selected -> view previous task according to stack array
+    when forward arrow selected -> view next task according to stack array
+    flip button should only be selectable when viewing task with id = currentTask
+    edit button selectable for all tasks
+    when Flip is selected -> send to flipNotes function
+    when Edit is selected -> send to editTask function
+    when Trash is selected -> send to deleteTask function
+    when Plus/Add selected -> send to editTask function
+    when Rotation Rectod selected -> send to rotationRecord function
+    */
+}
 
 const editTask = () => {
+    document.querySelector(`#screen-main`).classList.add(`hide`)
+    document.querySelector(`#screen-edit-task`).classList.remove(`hide`)
     /*
     Display edit form
     if new task, all fields should be empty
@@ -31,20 +44,16 @@ const editTask = () => {
     */
 }
 
-const displayCurrentTask = () => {
-    /*
-    Display the task with id = currentTask
-    when back arrow selected -> view previous task according to stack array
-    when forward arrow selected -> view next task according to stack array
-    flip button should only be selectable when viewing task with id = currentTask
-    edit button selectable for all tasks
-    when Flip is selected -> send to flipNotes function
-    when Edit is selected -> send to editTask function
-    when Trash is selected -> send to deleteTask function
-    when Plus/Add selected -> send to editTask function
-    when Rotation Rectod selected -> send to rotationRecord function
-    */
-}
+displayCurrentTask()
+
+// let task = {
+//     title: ``,
+//     description: ``,
+//     date: ``,
+//     notes: ``,
+//     id: ``,
+// }
+
 
 const flipNotes = () => {
     /*
