@@ -6,7 +6,7 @@ const historyList = []                 //array of history of completed tasks
 let currentTask                     //this will always be holding the id of the current task
 
 const displayCurrentTask = () => {
-    console.log(taskStack.length)
+    console.log("taskStack = ", taskStack.length)
     if(taskStack.length === 0){
         editTask()
     }
@@ -26,9 +26,13 @@ const displayCurrentTask = () => {
 
 const editTask = () => {
     document.querySelector(`#screen-main`).classList.add(`hide`)
-    document.querySelector(`#screen-edit-task`).classList.remove(`hide`)
+    document.querySelector(`#screen-edit-task`).classList.remove(`hide`)  //display edit form
+    console.log(document.querySelector(`#edit-title`).input)
+    if(document.querySelector(`#edit-title`).input === undefined){
+        console.log("No title")
+        document.querySelector(`#edit-done`).disabled = true
+    }
     /*
-    Display edit form
     if new task, all fields should be empty
         create new task object
     if editing task, fields should have data from id = whatever the id of the task was where edit was clicked
