@@ -26,11 +26,11 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 let Savings = 0
 let Stupid = 0
 let Tithes = 0
-let SavingsNotes = document.querySelector(`#savings-expense-description`).value
-let StupidNotes = document.querySelector(`#stupid-expense-description`).value
-let SavingsSubtract = document.querySelector(`#savings-expense-amount`).value
-let StupidSubtract = document.querySelector(`#stupid-expense-amount`).value
-let PayAmount = document.querySelector(`#pay-amount`).value
+let SavingsNotes
+let StupidNotes
+let SavingsSubtract
+let StupidSubtract
+let PayAmount1
 
 document.querySelector(`#stupid-total`).innerHTML = 0
 document.querySelector(`#tithe-total`).innerHTML = 0
