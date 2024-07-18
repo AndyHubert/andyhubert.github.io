@@ -67,5 +67,6 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
 })
 
 document.querySelector(`#title-clear`).addEventListener(`click`, () => {
-    document.querySelector(`#tithe-total`).innerHTML = 0
+    Tithes = 0
+    document.querySelector(`#tithe-total`).innerHTML = Tithes
 })
