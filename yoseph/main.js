@@ -42,6 +42,16 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
     PayAmount = document.querySelector(`#pay-amount`).value
     PayAmount = Number(PayAmount)
+    let PayAmount1 = PayAmount / 4
+    let PayAmount2 = PayAmount / 10
+    let PayAmount3 = PayAmount / 100
+    PayAmount3 = PayAmount3 * 65
+    Savings = Savings + PayAmount3
+    Stupid = Stupid + PayAmount1
+    Tithes = Tithes + PayAmount2
+    document.querySelector(`#stupid-total`).innerHTML = Stupid
+    document.querySelector(`#tithe-total`).innerHTML = Tithes
+    document.querySelector(`#savings-total`).innerHTML = Savings
     document.querySelector(`#pay-amount`).value = ''
 })
 
