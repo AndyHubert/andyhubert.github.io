@@ -19,7 +19,7 @@ let currentVal = document.querySelector(`#savings-expense-description`).value   
 
 document.querySelector(`#savings-total`).innerHTML                              = output
 
-document.querySelector(`#savings-expense-enter`).addEventListener(() => {       = button
+document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {       = button
 })
     */
 
@@ -31,3 +31,7 @@ let StupidNotes = document.querySelector(`#stupid-expense-description`).value
 let SavingsSubtract = document.querySelector(`#savings-expense-amount`).value
 let StupidSubtract = document.querySelector(`#stupid-expense-amount`).value
 let PayAmount = document.querySelector(`#pay-amount`).value
+
+document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {
+    alert('oooooooooooooh yeaaaaaaaaaaa')
+})
