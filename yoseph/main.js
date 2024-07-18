@@ -33,5 +33,21 @@ let StupidSubtract = document.querySelector(`#stupid-expense-amount`).value
 let PayAmount = document.querySelector(`#pay-amount`).value
 
 document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {
-    alert('oooooooooooooh yeaaaaaaaaaaa')
+    SavingsSubtract = document.querySelector(`#savings-expense-amount`).value
+    Savings = Savings - SavingsSubtract
+    document.querySelector(`#savings-total`).innerHTML = Savings
+})
+
+document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
+    PayAmount = document.querySelector(`#pay-amount`).value
+    PayAmount = Number(PayAmount)
+    Savings = Savings + PayAmount
+    document.querySelector(`#savings-total`).innerHTML = Savings
+    document.querySelector(`#pay-amount`).value = ''
+})
+
+document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => {
+})
+
+document.querySelector(`#title-clear`).addEventListener(`click`, () => {
 })
