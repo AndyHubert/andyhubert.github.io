@@ -1,3 +1,113 @@
 body {
-    font-size: 50px;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+#screen-workout {
+    justify-content: center;
+}
+
+.hide {
+    display: none;
+}
+
+button {
+    padding: 30px;
+    margin: 5px;
+}
+
+.main-button {
+    height: 100px;
+    width: 400px;
+    max-width: calc(100vw - 40px);
+}
+
+#view-log {
+    height: 50px;
+}
+
+#clock {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: 1px solid red;
+    color: black;
+    line-height: 50px;
+    padding: 0 20px;
+    border-radius: 5px;
+}
+
+#comments {
+    position: absolute;
+    top: 90px;
+    right: 20px;
+    max-width: 150px;
+}
+
+.workout-canvas {
+    position: relative;
+    align-self: center;
+    width: 300px;
+    height: 500px;
+    border-bottom: 1px solid black;
+    background: rgb(0 0 0/.05);
+}
+
+.bubble {
+    position: absolute;
+    top: -40px;
+    left: 60px;
+    width: 250px;
+    z-index: 1;
+}
+
+.bubble-text-container {
+    position: absolute;
+    top: 25px;
+    left: 90px;
+    width: 190px;
+    height: 124px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#stick-figure {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#cancel, #back {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.screen-heading {
+    font-size: 30px;
+    margin: 20px 0 10px;
+}
+
+#stick-figure {
+    white-space: pre;
+    font-family: monospace;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
