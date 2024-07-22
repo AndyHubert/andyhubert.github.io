@@ -3,7 +3,7 @@
 //Global variables
 const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
-let currentTask                     //this will always be holding the id of the current task
+let currentTask = 1                     //this will always be holding the id of the current task
 
 const displayCurrentTask = () => {
     console.log("taskStack = ", taskStack.length)
@@ -25,23 +25,49 @@ const displayCurrentTask = () => {
 }
 
 const editTask = () => {
+    console.log("Current Task on entering editTask -", currentTask)
+    
     let titleText = ""
     let descriptionText = ""
-    document.querySelector(`#screen-main`).classList.add(`hide`)
-    document.querySelector(`#screen-edit-task`).classList.remove(`hide`)  //display edit form
-    console.log(document.querySelector(`#edit-title`).input)
-    if(document.querySelector(`#edit-title`).input === undefined){
-        document.querySelector(`#edit-done`).disabled = true  //disable DONE button if no title
+
+    //generateTask function
+    const generateTask = () => {
+        console.log("into generateTask") //STOPPED HERE! 1)generate a new task. 2)save new task. 3)what do when edit task instead of new?
+        //create new task and give it ID
+        // if (newTask) {
+        //     let task = {
+        //         title: titleText,
+        //         description: descriptionText,
+        //         date: new Date(),
+        //         notes: ``,
+        //         id: currentTask,
+        //     }
+        //     currentTask++
+        //     console.log("Current Task after task creation and increment -", currentTask)
+        // }
     }
-    document.addEventListener(`click`, (titleText, descriptionText ) => {
+    
+    //hide displayCurrentTask and show editTask
+    document.querySelector(`#screen-main`).classList.add(`hide`)
+    document.querySelector(`#screen-edit-task`).classList.remove(`hide`)
+    
+    //disable DONE button if no title
+    if(document.querySelector(`#edit-title`).input === undefined){
+        document.querySelector(`#edit-done`).disabled = true
+    }
+
+    //input data on click
+    document.addEventListener(`click`, () => {
+        console.log("Current Task on entering eventlistener -", currentTask)
         titleText = document.querySelector(`#edit-title`).value
         if(titleText !== ""){
             document.querySelector(`#edit-done`).disabled = false  //enable DONE button once Title input
         }
         descriptionText = document.querySelector(`#edit-description`).value
-        console.log("Title:", titleText)
-        console.log("Description:", descriptionText)
-    })
+        console.log("titleText", titleText)
+        console.log("descriptionText", descriptionText)
+        document.querySelector("#edit-done").addEventListener("click", generateTask)
+    })    
 
         /*
         if new task, all fields should be empty
@@ -59,15 +85,6 @@ const editTask = () => {
 }
 
 displayCurrentTask()
-
-// let task = {
-//     title: ``,
-//     description: ``,
-//     date: ``,
-//     notes: ``,
-//     id: ``,
-// }
-
 
 const flipNotes = () => {
     /*
