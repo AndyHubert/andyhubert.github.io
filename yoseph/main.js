@@ -66,7 +66,7 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
     document.querySelector(`#stupid-expense-amount`).value = ''
 })
 
-document.querySelector(`#title-clear`).addEventListener(`click`, () => {
+document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
     Tithes = 0
     document.querySelector(`#tithe-total`).innerHTML = Tithes
 })
