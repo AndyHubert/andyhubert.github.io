@@ -25,27 +25,37 @@ const displayCurrentTask = () => {
 }
 
 const editTask = () => {
+    let titleText = ""
+    let descriptionText = ""
     document.querySelector(`#screen-main`).classList.add(`hide`)
     document.querySelector(`#screen-edit-task`).classList.remove(`hide`)  //display edit form
     console.log(document.querySelector(`#edit-title`).input)
     if(document.querySelector(`#edit-title`).input === undefined){
-        console.log("No title")
-        document.querySelector(`#edit-done`).disabled = true
+        document.querySelector(`#edit-done`).disabled = true  //disable DONE button if no title
     }
-    /*
-    if new task, all fields should be empty
-        create new task object
-    if editing task, fields should have data from id = whatever the id of the task was where edit was clicked
-    hide done button until title filled in
-    Allow to edit title
-    unhide done button as soon as title filled in
-    Allow to edit description
-    when Done selected ->
-        1)save data to task
-        2)if new, push new task to front of rotation...or give it an id that will put it where you want it???
-            return to displayCurrentTask with currentTask id = either new task or previous current task
-        3) if editing a task, return to displayCurrentTask viewing the task edited (whether it's the current task or not)
-    */
+    document.addEventListener(`click`, (titleText, descriptionText ) => {
+        titleText = document.querySelector(`#edit-title`).value
+        if(titleText !== ""){
+            document.querySelector(`#edit-done`).disabled = false  //enable DONE button once Title input
+        }
+        descriptionText = document.querySelector(`#edit-description`).value
+        console.log("Title:", titleText)
+        console.log("Description:", descriptionText)
+    })
+
+        /*
+        if new task, all fields should be empty
+            create new task object
+        if editing task, fields should have data from id = whatever the id of the task was where edit was clicked
+        Allow to edit title
+        unhide done button as soon as title filled in
+        Allow to edit description
+        when Done selected ->
+            1)save data to task
+            2)if new, push new task to front of rotation...or give it an id that will put it where you want it???
+                return to displayCurrentTask with currentTask id = either new task or previous current task
+            3) if editing a task, return to displayCurrentTask viewing the task edited (whether it's the current task or not)
+        */
 }
 
 displayCurrentTask()
