@@ -1,9 +1,44 @@
+
+let startWorkoutFunction = () => {
+    document.querySelector('#screen-buttons').classList.add('hide')
+    document.querySelector('#screen-workout').classList.remove('hide')  
+}
+
+document.querySelector('#do-legs').addEventListener('click', 
+    () => {
+        startWorkoutFunction()
+    }
+)
+document.querySelector('#do-arms').addEventListener('click', 
+    () => {
+        startWorkoutFunction()
+    }
+)
+document.querySelector('#do-random').addEventListener('click', 
+    () => {
+        startWorkoutFunction()
+    }
+)
+document.querySelector('#cancel').addEventListener('click', 
+    () => {
+        document.querySelector('#screen-workout').classList.add('hide')
+        document.querySelector('#screen-buttons').classList.remove('hide')
+    }
+)
+document.querySelector('#view-log').addEventListener('click', 
+    () => {
+        document.querySelector('#screen-buttons').classList.add('hide')
+        document.querySelector('#screen-log').classList.remove('hide')
+    }
+)
+document.querySelector('#back').addEventListener('click', 
+    () => {
+        document.querySelector('#screen-log').classList.add('hide')
+        document.querySelector('#screen-buttons').classList.remove('hide')
+    }
+)
+
 // document.querySelector('#stick-figure').innerHTML = ""
-// document.querySelector('#view-log').addEventListener('click', () => {
-
-// })
-// document.querySelector('#screen-buttons').classList.add('hide')
-
 
 // Things my program needs to do:
 // if buttin is pushed start the workout chosen
