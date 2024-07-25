@@ -1,4 +1,109 @@
+setTimeout( 
+    () => {
+        document.querySelector('#screen-buttons').classList.remove('hide')  
+    },
+    300  
+)
+const WORKOUT_OPTIONS = {
+    legs: [
+        {
+            name: "squat",
+            workout: [
+              `
+              move 1
+              `  
+              `
+              move 2
+              `
+              `
+              move 3
+              `
+            ]
+    
+        },
+        {
+            name: "lunge",
+            workout: [
+              `
+              move 1
+              `  
+              `
+              move 2
+              `
+              `
+              move 3
+              `
+            ]
+    
+        },
+        {
+            name: "walking squat",
+            workout: [
+              `
+              move 1
+              `  
+              `
+              move 2
+              `
+              `
+              move 3
+              `
+            ]
+    
+        },
+    ]
+    arms: [
+        {
+            name: "pushup",
+            workout: [
+              `
+              move 1
+              `  
+              `
+              move 2
+              `
+              `
+              move 3
+              `
+            ]
+    
+        },
+        {
+            name: "turning plank",
+            workout: [
+              `
+              move 1
+              `  
+              `
+              move 2
+              `
+              `
+              move 3
+              `
+            ]
+    
+        },
+        {
+            name: "cobra pushups",
+            workout: [
+              `
+              move 1
+              `  
+              `
+              move 2
+              `
+              `
+              move 3
+              `
+            ]
+    
+        },
+    ]
+    
+    
+    
 
+}
 let startWorkoutFunction = () => {
     document.querySelector('#screen-buttons').classList.add('hide')
     document.querySelector('#screen-workout').classList.remove('hide')  
@@ -38,7 +143,23 @@ document.querySelector('#back').addEventListener('click',
     }
 )
 
-// document.querySelector('#stick-figure').innerHTML = ""
+document.querySelector('#stick-figure').innerHTML = `
+    _____
+   |     |
+   |     |
+    -----
+      |
+      |
+ -----|-----
+      |
+      |
+     / \\
+    /   \\
+   /     \\
+`
+ 
+
+
 
 // Things my program needs to do:
 // if buttin is pushed start the workout chosen
