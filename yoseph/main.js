@@ -31,6 +31,7 @@ let StupidNotes
 let SavingsSubtract
 let StupidSubtract
 let PayAmount1
+let History = []
 
 document.querySelector(`#stupid-total`).innerHTML = 0
 document.querySelector(`#tithe-total`).innerHTML = 0
@@ -41,6 +42,8 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
     Savings = Savings - SavingsSubtract
     document.querySelector(`#savings-total`).innerHTML = Savings
     document.querySelector(`#savings-expense-amount`).value = ''
+    History.push(document.querySelector(`#savings-expense-description`).value)
+    document.querySelector(`#savings-expense-description`).value = ''
 })
 
 document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
@@ -64,9 +67,15 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
     Stupid = Stupid - StupidSubtract
     document.querySelector(`#stupid-total`).innerHTML = Stupid
     document.querySelector(`#stupid-expense-amount`).value = ''
+    History.push(document.querySelector(`#stupid-expense-description`).value)
+    document.querySelector(`#stupid-expense-description`).value = ''
 })
 
 document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
     Tithes = 0
     document.querySelector(`#tithe-total`).innerHTML = Tithes
+})
+
+document.querySelector(`#view-history`).addEventListener(`click`, () => {
+    alert(History)
 })
