@@ -6,10 +6,12 @@ const historyList = []                 //array of history of completed tasks
 let currentTask = 1                     //this will always be holding the id of the current task
 
 const displayCurrentTask = () => {
+
     console.log("taskStack = ", taskStack.length)
     if(taskStack.length === 0){
         editTask()
     }
+    console.log("first task created: task", taskStack) //STOPPED HERE: task is created, pushed onto taskStack and returning to displayCurrent Task - how do I display the current task?
     /*
     Display the task with id = currentTask
     when back arrow selected -> view previous task according to stack array
@@ -32,19 +34,24 @@ const editTask = () => {
 
     //generateTask function
     const generateTask = () => {
-        console.log("into generateTask") //STOPPED HERE! 1)generate a new task. 2)save new task. 3)what do when edit task instead of new?
-        //create new task and give it ID
-        // if (newTask) {
-        //     let task = {
-        //         title: titleText,
-        //         description: descriptionText,
-        //         date: new Date(),
-        //         notes: ``,
-        //         id: currentTask,
-        //     }
-        //     currentTask++
-        //     console.log("Current Task after task creation and increment -", currentTask)
-        // }
+        console.log("into generateTask")
+        //create new task and give it ID  
+        let task = {
+            title: titleText,
+            description: descriptionText,
+            date: new Date(),
+            notes: ``,
+            id: currentTask,
+        }
+        console.log("task =", task)
+        taskStack.push(task)
+        currentTask++
+        console.log("Current Task after task creation and increment -", currentTask)
+        
+        //hide editTask and show displayCurrent task and return to displayCurrent task
+        document.querySelector(`#screen-edit-task`).classList.add(`hide`)
+        document.querySelector(`#screen-main`).classList.remove(`hide`)
+        displayCurrentTask()
     }
     
     //hide displayCurrentTask and show editTask
