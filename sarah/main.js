@@ -5,8 +5,9 @@ const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
 let currentTask = 1                     //this will always be holding the id of the current task
 let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
+document.querySelector(`#edit-done`).disabled = true //start off with edit-done button disabled
 
-const showCorrectScreen = (showMe) => {                 //hides currentScreen and shows parameter-indicated screen
+const showCorrectScreen = (showMe) => {
     console.log("currentScreen before", currentScreen)
     
     document.querySelector(currentScreen).classList.add(`hide`)
@@ -16,18 +17,16 @@ const showCorrectScreen = (showMe) => {                 //hides currentScreen an
     console.log("currentScreen after", currentScreen)
 }
 
-
-//STOPPED HERE
-//Global event listener to disable done/enable editTask done button (change event - not on doc but on input), 
-//global eventlistener on done button to generate task
-
 const displayCurrentTask = () => {
-
+    
+    //Hide previous screen and show displayCurrentTask screen
+    showCorrectScreen(`#screen-main`)
+    
     console.log("taskStack = ", taskStack.length)
     if(taskStack.length === 0){
         editTask()
     }
-    console.log("first task created: task", taskStack)
+    console.log("task created: task", taskStack)
     /*
     Display the task with id = currentTask
     when back arrow selected -> view previous task according to stack array
@@ -42,54 +41,40 @@ const displayCurrentTask = () => {
     */
 }
 
+//Global event listener to disable/enable editTask done button (have a change event - not on doc, but on input) 
+const doneButtonDisable = (doneDisable) => {document.querySelector(`#edit-done`).disabled = doneDisable}
+
+const generateTask = () => {          
+    console.log("into generateTask")
+    //create new task and give it ID  
+    let task = {
+        title: document.querySelector(`#edit-title`).value,
+        description: document.querySelector(`#edit-description`).value,
+        date: new Date(),
+        notes: ``,
+        id: currentTask,
+    }
+    console.log("task =", task)
+    taskStack.push(task)
+    currentTask++
+    console.log("Current Task after task creation and increment -", currentTask)
+    displayCurrentTask()
+}
+
+//global eventlistener on done button to generate task
+document.querySelector(`#edit-done`).addEventListener("click", generateTask)
+
+
 const editTask = () => {
     console.log("Current Task on entering editTask -", currentTask)
     
-    let titleText = ""
-    let descriptionText = ""
-
-    //generateTask function
-    const generateTask = () => {
-        console.log("into generateTask")
-        //create new task and give it ID  
-        let task = {
-            title: titleText,
-            description: descriptionText,
-            date: new Date(),
-            notes: ``,
-            id: currentTask,
-        }
-        console.log("task =", task)
-        taskStack.push(task)
-        currentTask++
-        console.log("Current Task after task creation and increment -", currentTask)
-        
-        //hide editTask and show displayCurrent task and return to displayCurrent task
-        document.querySelector(`#screen-edit-task`).classList.add(`hide`)
-        document.querySelector(`#screen-main`).classList.remove(`hide`)
-        displayCurrentTask()
-    }
-    
     //Hide previous screen and show editTask screen
     showCorrectScreen(`#screen-edit-task`)
-    
-    //disable DONE button if no title
-    if(document.querySelector(`#edit-title`).input === undefined){
-        document.querySelector(`#edit-done`).disabled = true
-    }
 
-    //input data on click
-    document.addEventListener(`click`, () => {
-        console.log("Current Task on entering eventlistener -", currentTask)
-        titleText = document.querySelector(`#edit-title`).value
-        if(titleText !== ""){
-            document.querySelector(`#edit-done`).disabled = false  //enable DONE button once Title input
-        }
-        descriptionText = document.querySelector(`#edit-description`).value
-        console.log("titleText", titleText)
-        console.log("descriptionText", descriptionText)
-        document.querySelector("#edit-done").addEventListener("click", generateTask)
-    })    
+    //change event to `#edit-title` input (not on doc) that calls doneButtonDisable with 'false' parameter
+    document.querySelector(`#edit-title`).addEventListener("change", (event) => {
+        doneButtonDisable(false)
+    })
 
         /*
         if new task, all fields should be empty
