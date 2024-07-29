@@ -1,9 +1,25 @@
 //NOTES: testing at http-server
 
-//Global variables
+//Global variables and functions
 const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
 let currentTask = 1                     //this will always be holding the id of the current task
+let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
+
+const showCorrectScreen = (showMe) => {                 //hides currentScreen and shows parameter-indicated screen
+    console.log("currentScreen before", currentScreen)
+    
+    document.querySelector(currentScreen).classList.add(`hide`)
+    document.querySelector(showMe).classList.remove(`hide`)
+    currentScreen = showMe
+   
+    console.log("currentScreen after", currentScreen)
+}
+
+
+//STOPPED HERE
+//Global event listener to disable done/enable editTask done button (change event - not on doc but on input), 
+//global eventlistener on done button to generate task
 
 const displayCurrentTask = () => {
 
@@ -11,7 +27,7 @@ const displayCurrentTask = () => {
     if(taskStack.length === 0){
         editTask()
     }
-    console.log("first task created: task", taskStack) //STOPPED HERE: task is created, pushed onto taskStack and returning to displayCurrent Task - how do I display the current task?
+    console.log("first task created: task", taskStack)
     /*
     Display the task with id = currentTask
     when back arrow selected -> view previous task according to stack array
@@ -54,9 +70,8 @@ const editTask = () => {
         displayCurrentTask()
     }
     
-    //hide displayCurrentTask and show editTask
-    document.querySelector(`#screen-main`).classList.add(`hide`)
-    document.querySelector(`#screen-edit-task`).classList.remove(`hide`)
+    //Hide previous screen and show editTask screen
+    showCorrectScreen(`#screen-edit-task`)
     
     //disable DONE button if no title
     if(document.querySelector(`#edit-title`).input === undefined){
