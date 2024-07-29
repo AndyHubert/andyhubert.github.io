@@ -22,7 +22,7 @@ const WORKOUT_OPTIONS = {
      /   \\
     /     \\
    /       \\
-              `  
+              `,  
               `
      _____
     |     |
@@ -34,7 +34,7 @@ const WORKOUT_OPTIONS = {
        |
     /     \\
    /       \\
-              `
+              `,
               `
      _____
     |     |
@@ -48,7 +48,7 @@ const WORKOUT_OPTIONS = {
      /   \\
     /     \\
    /       \\
-              `
+              `,
             ]
     
         },
@@ -67,7 +67,7 @@ const WORKOUT_OPTIONS = {
      |   |
      |   |    
      |   |    
-     |   |    `  
+     |   |    `,  
               `
      _____
     |     |
@@ -79,7 +79,7 @@ const WORKOUT_OPTIONS = {
        |
       /  |
      |   |     
-    /    |     `
+    /    |     `,
                `
      _____
     |     |
@@ -93,22 +93,16 @@ const WORKOUT_OPTIONS = {
      |   |    
      |   |    
      |   |
-              `
+              `,
             ]
     
         },
         {
             name: "walking squat",
             workout: [
-              `
-              move 1
-              `  
-              `
-              move 2
-              `
-              `
-              move 3
-              `
+              `move 1`, 
+              `move 2`,
+              `move 3`,
             ]
     
         },
@@ -119,13 +113,13 @@ const WORKOUT_OPTIONS = {
             workout: [
               `
               move 1
-              `  
+              `,  
               `
               move 2
-              `
+              `,
               `
               move 3
-              `
+              `,
             ]
     
         },
@@ -134,13 +128,13 @@ const WORKOUT_OPTIONS = {
             workout: [
               `
               move 1
-              `  
+              `, 
               `
               move 2
-              `
+              `,
               `
               move 3
-              `
+              `,
             ]
     
         },
@@ -149,22 +143,19 @@ const WORKOUT_OPTIONS = {
             workout: [
               `
               move 1
-              `  
+              `,  
               `
               move 2
-              `
+              `,
               `
               move 3
-              `
+              `,
             ]
     
         },
     ]
-    
-    
-    
-
 }
+
 let startWorkoutFunction = () => {
     document.querySelector('#screen-buttons').classList.add('hide')
     document.querySelector('#screen-workout').classList.remove('hide')  
@@ -172,6 +163,7 @@ let startWorkoutFunction = () => {
 
 document.querySelector('#do-legs').addEventListener('click', 
     () => {
+        console.log('hi')
         startWorkoutFunction()
     }
 )
