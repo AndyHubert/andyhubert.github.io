@@ -19,6 +19,9 @@ let currentVal = document.querySelector(`#savings-expense-description`).value   
 
 document.querySelector(`#savings-total`).innerHTML                              = output
 
+document.querySelector(`#screen-main`).classList.add(`hide`)
+document.querySelector(`#screen-history`).classList.remove(`hide`)              = change page
+
 document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {       = button
 })
     */
@@ -85,5 +88,6 @@ document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
 })
 
 document.querySelector(`#view-history`).addEventListener(`click`, () => {
-    alert(History)
+    document.querySelector(`#screen-main`).classList.add(`hide`)
+    document.querySelector(`#screen-history`).classList.remove(`hide`)
 })
