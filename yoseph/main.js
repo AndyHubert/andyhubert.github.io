@@ -42,7 +42,11 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
     Savings = Savings - SavingsSubtract
     document.querySelector(`#savings-total`).innerHTML = Savings
     document.querySelector(`#savings-expense-amount`).value = ''
-    History.push(document.querySelector(`#savings-expense-description`).value)
+    const savingsHistoryItem = {
+        description:  document.querySelector(`#savings-expense-description`).value,
+        amount: SavingsSubtract,
+    }
+    History.push(savingsHistoryItem)
     document.querySelector(`#savings-expense-description`).value = ''
 })
 
@@ -67,7 +71,11 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
     Stupid = Stupid - StupidSubtract
     document.querySelector(`#stupid-total`).innerHTML = Stupid
     document.querySelector(`#stupid-expense-amount`).value = ''
-    History.push(document.querySelector(`#stupid-expense-description`).value)
+    const stupidHistoryItem = {
+        description:  document.querySelector(`#stupid-expense-description`).value,
+        amount: StupidSubtract,
+    }
+    History.push(stupidHistoryItem)
     document.querySelector(`#stupid-expense-description`).value = ''
 })
 
