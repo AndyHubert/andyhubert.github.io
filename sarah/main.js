@@ -32,7 +32,14 @@ const displayCurrentTask = () => {
     document.querySelector(`#card-title`).innerHTML = taskStack[currentTask].title
     document.querySelector(`#card-description`).innerHTML = taskStack[currentTask].description
 
-
+    //when + Add New Task selected -> send to editTask
+    document.querySelector(`#add-new`).addEventListener("click", () => {
+        document.querySelector(`#edit-title`).value = ''
+        document.querySelector(`#edit-description`).value = ''
+        editTask()
+    })
+    
+    
     /*
 
     <div class="card">
@@ -50,7 +57,6 @@ const displayCurrentTask = () => {
     when Flip is selected -> send to flipNotes function
     when Edit is selected -> send to editTask function
     when Trash is selected -> send to deleteTask function
-    when Plus/Add selected -> send to editTask function
     when Rotation Rectod selected -> send to rotationRecord function
     */
 }
