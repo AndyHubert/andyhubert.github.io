@@ -3,7 +3,7 @@
 //Global variables and functions
 const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
-let currentTask = 1                     //this will always be holding the id of the current task
+let currentTask = 0                     //this will always be holding the id of the current task
 let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
 document.querySelector(`#edit-done`).disabled = true //start off with edit-done button disabled
 
@@ -22,13 +22,27 @@ const displayCurrentTask = () => {
     //Hide previous screen and show displayCurrentTask screen
     showCorrectScreen(`#screen-main`)
     
-    console.log("taskStack = ", taskStack.length)
+    console.log("taskStack length = ", taskStack.length)
     if(taskStack.length === 0){
         editTask()
     }
-    console.log("task created: task", taskStack)
+    console.log("taskStack", taskStack)
+
+    //Display the task with id = currentTask
+    document.querySelector(`#card-title`).innerHTML = taskStack[currentTask].title
+    document.querySelector(`#card-description`).innerHTML = taskStack[currentTask].description
+
+
     /*
-    Display the task with id = currentTask
+
+    <div class="card">
+                    <div class="card-heading">Current Task</div>
+                    <div id="card-title"></div>
+                    <div id="card-description"></div>
+                    <div class="card-buttons">
+                        <button id="check-off">✓ Check</button>
+                        <button id="edit">Edit</button>
+
     when back arrow selected -> view previous task according to stack array
     when forward arrow selected -> view next task according to stack array
     flip button should only be selectable when viewing task with id = currentTask
@@ -52,12 +66,10 @@ const generateTask = () => {
         description: document.querySelector(`#edit-description`).value,
         date: new Date(),
         notes: ``,
-        id: currentTask,
+        id: taskStack.length + 1,  // TODO: I need to use the taskStack with the reduce function to find the largest id and then add 1
     }
     console.log("task =", task)
     taskStack.push(task)
-    currentTask++
-    console.log("Current Task after task creation and increment -", currentTask)
     displayCurrentTask()
 }
 
@@ -66,7 +78,6 @@ document.querySelector(`#edit-done`).addEventListener("click", generateTask)
 
 
 const editTask = () => {
-    console.log("Current Task on entering editTask -", currentTask)
     
     //Hide previous screen and show editTask screen
     showCorrectScreen(`#screen-edit-task`)
