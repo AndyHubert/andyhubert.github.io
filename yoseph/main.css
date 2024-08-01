@@ -28,3 +28,33 @@ body {
 input {
     margin: 0 5px;
 }
+
+#history-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.line {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.date {
+    width: 120px;
+}
+
+.account {
+    width: 80px;
+}
+
+.amount {
+    width: 90px;
+}
+
+.description {
+}

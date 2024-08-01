@@ -26,6 +26,21 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 })
     */
 
+// document.querySelector('#history-content').innerHTML = `
+//     <div class="line">
+//         <div class="date">
+//             ${'2024/07/01'}
+//         </div>
+//         <div class="amount">
+//             ${'2024/07/01'}
+//         </div>
+
+
+//     </div>
+
+// `
+
+
 let Savings = 0
 let Stupid = 0
 let Tithes = 0
@@ -48,6 +63,7 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
     const savingsHistoryItem = {
         description: document.querySelector(`#savings-expense-description`).value,
         amount: SavingsSubtract,
+        date: Date.now(),  // new Date(item.date)
     }
     History.push(savingsHistoryItem)
     document.querySelector(`#savings-expense-description`).value = ''
@@ -90,6 +106,25 @@ document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
 document.querySelector(`#view-history`).addEventListener(`click`, () => {
     document.querySelector(`#screen-main`).classList.add(`hide`)
     document.querySelector(`#screen-history`).classList.remove(`hide`)
+    document.querySelector('#history-content').innerHTML = `
+    <div class="line">
+        <div class="date">
+            ${'2024/07/01'}
+        </div>
+        <div class="account">
+            ${'stupid'}
+        </div>
+        <div class="amount">
+            ${'280.56'}
+        </div>
+        <div class="description">
+            ${'payed back mom'}
+        </div>
+
+
+    </div>
+
+`
 })
 
 document.querySelector(`#back`).addEventListener(`click`, () => {
