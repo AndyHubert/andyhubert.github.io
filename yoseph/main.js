@@ -46,7 +46,7 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
     document.querySelector(`#savings-total`).innerHTML = Savings
     document.querySelector(`#savings-expense-amount`).value = ''
     const savingsHistoryItem = {
-        description:  document.querySelector(`#savings-expense-description`).value,
+        description: document.querySelector(`#savings-expense-description`).value,
         amount: SavingsSubtract,
     }
     History.push(savingsHistoryItem)
@@ -90,4 +90,9 @@ document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
 document.querySelector(`#view-history`).addEventListener(`click`, () => {
     document.querySelector(`#screen-main`).classList.add(`hide`)
     document.querySelector(`#screen-history`).classList.remove(`hide`)
+})
+
+document.querySelector(`#back`).addEventListener(`click`, () => {
+    document.querySelector(`#screen-main`).classList.remove(`hide`)
+    document.querySelector(`#screen-history`).classList.add(`hide`)
 })
