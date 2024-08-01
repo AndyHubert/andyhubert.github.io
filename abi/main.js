@@ -155,10 +155,30 @@ const WORKOUT_OPTIONS = {
         },
     ]
 }
-
+let workoutTimer = undefined
 let startWorkoutFunction = () => {
     document.querySelector('#screen-buttons').classList.add('hide')
-    document.querySelector('#screen-workout').classList.remove('hide')  
+    document.querySelector('#screen-workout').classList.remove('hide') 
+    let numSecondsLeft = 15 * 60
+    document.querySelector('#clock').innerHTML = "15:00"
+    setTimeout(
+        () => {
+             workoutTimer = setInterval(
+                () => {
+                    numSecondsLeft--
+                    clockTimer = `${Math.floor(numSecondsLeft / 60)}:${numSecondsLeft % 60}`
+                    let seconds = numSecondsLeft % 60
+                    if(seconds <= 9){
+                        clockTimer = `${Math.floor(numSecondsLeft / 60)}:0${numSecondsLeft % 60}`
+                    }
+                    document.querySelector('#clock').innerHTML = clockTimer
+                },
+                1000 * 1
+            )
+        },
+        100
+    ) 
+    
 }
 
 document.querySelector('#do-legs').addEventListener('click', 
@@ -181,6 +201,7 @@ document.querySelector('#cancel').addEventListener('click',
     () => {
         document.querySelector('#screen-workout').classList.add('hide')
         document.querySelector('#screen-buttons').classList.remove('hide')
+        clearInterval(workoutTimer)
     }
 )
 document.querySelector('#view-log').addEventListener('click', 
@@ -210,7 +231,9 @@ document.querySelector('#stick-figure').innerHTML = `
     /     \\
    /       \\
 `
- 
+
+        
+    
 
 
 
