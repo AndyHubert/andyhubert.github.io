@@ -4,6 +4,7 @@
 const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
 let currentTask = 0                     //this will always be holding the id of the current task
+let displayedTask = currentTask         //keeps track of what task is currently being displayed, for previous and next task displays
 let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
 document.querySelector(`#edit-done`).disabled = true //start off with edit-done button disabled
 
@@ -39,6 +40,12 @@ const displayCurrentTask = () => {
         editTask()
     })
     
+    //when 'next->' selected, view next task according to taskStack
+    document.querySelector(`#next`).addEventListener("click", () => {
+        displayedTask++
+        document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
+        document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+    })
     
     /*
 
@@ -51,7 +58,6 @@ const displayCurrentTask = () => {
                         <button id="edit">Edit</button>
 
     when back arrow selected -> view previous task according to stack array
-    when forward arrow selected -> view next task according to stack array
     flip button should only be selectable when viewing task with id = currentTask
     edit button selectable for all tasks
     when Flip is selected -> send to flipNotes function
