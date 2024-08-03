@@ -26,21 +26,6 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 })
     */
 
-// document.querySelector('#history-content').innerHTML = `
-//     <div class="line">
-//         <div class="date">
-//             ${'2024/07/01'}
-//         </div>
-//         <div class="amount">
-//             ${'2024/07/01'}
-//         </div>
-
-
-//     </div>
-
-// `
-
-
 let Savings = 0
 let Stupid = 0
 let Tithes = 0
@@ -64,6 +49,7 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
         description: document.querySelector(`#savings-expense-description`).value,
         amount: SavingsSubtract,
         date: Date.now(),  // new Date(item.date)
+        account: "savings"
     }
     History.push(savingsHistoryItem)
     document.querySelector(`#savings-expense-description`).value = ''
@@ -91,8 +77,10 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
     document.querySelector(`#stupid-total`).innerHTML = Stupid
     document.querySelector(`#stupid-expense-amount`).value = ''
     const stupidHistoryItem = {
-        description:  document.querySelector(`#stupid-expense-description`).value,
+        description: document.querySelector(`#stupid-expense-description`).value,
         amount: StupidSubtract,
+        date: Date.now(),
+        account: "stupid"
     }
     History.push(stupidHistoryItem)
     document.querySelector(`#stupid-expense-description`).value = ''
@@ -106,26 +94,18 @@ document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
 document.querySelector(`#view-history`).addEventListener(`click`, () => {
     document.querySelector(`#screen-main`).classList.add(`hide`)
     document.querySelector(`#screen-history`).classList.remove(`hide`)
-    document.querySelector('#history-content').innerHTML = `
-    <div class="line">
-        <div class="date">
-            ${'2024/07/01'}
-        </div>
-        <div class="account">
-            ${'stupid'}
-        </div>
-        <div class="amount">
-            ${'280.56'}
-        </div>
-        <div class="description">
-            ${'payed back mom'}
-        </div>
-
-
-    </div>
-
-`
-})
+    const viewHistory = (
+        History
+            .map((info) => {
+                return `
+                    <div>
+                        ${info.date} ${info.account} ${info.amount}$ ${info.description}
+                    </div>
+                `
+            })
+            .join(`\n`)
+    )
+    document.querySelector('#history-content').innerHTML = viewHistory })
 
 document.querySelector(`#back`).addEventListener(`click`, () => {
     document.querySelector(`#screen-main`).classList.remove(`hide`)
