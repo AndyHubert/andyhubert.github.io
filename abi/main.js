@@ -4,6 +4,7 @@ setTimeout(
     },
     300  
 )
+const STARTING_SECONDS = 5 //15 * 60 
 const WORKOUT_OPTIONS = {
     legs: [
         {
@@ -155,23 +156,27 @@ const WORKOUT_OPTIONS = {
         },
     ]
 }
+
+const setClock = (numSecLeft) => {
+    clockTimer = `${Math.floor(numSecLeft / 60)}:${numSecLeft % 60}`
+    let seconds = numSecLeft % 60
+    if(seconds <= 9){
+        clockTimer = `${Math.floor(numSecLeft / 60)}:0${numSecLeft % 60}`
+    }
+    document.querySelector('#clock').innerHTML = clockTimer
+}
 let workoutTimer = undefined
 let startWorkoutFunction = () => {
     document.querySelector('#screen-buttons').classList.add('hide')
     document.querySelector('#screen-workout').classList.remove('hide') 
-    let numSecondsLeft = 15 * 60
-    document.querySelector('#clock').innerHTML = "15:00"
+    let numSecondsLeft = STARTING_SECONDS
+    setClock(numSecondsLeft)
     setTimeout(
         () => {
              workoutTimer = setInterval(
                 () => {
                     numSecondsLeft--
-                    clockTimer = `${Math.floor(numSecondsLeft / 60)}:${numSecondsLeft % 60}`
-                    let seconds = numSecondsLeft % 60
-                    if(seconds <= 9){
-                        clockTimer = `${Math.floor(numSecondsLeft / 60)}:0${numSecondsLeft % 60}`
-                    }
-                    document.querySelector('#clock').innerHTML = clockTimer
+                    setClock(numSecondsLeft)
                 },
                 1000 * 1
             )
