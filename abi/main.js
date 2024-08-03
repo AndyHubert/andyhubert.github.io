@@ -156,6 +156,11 @@ const WORKOUT_OPTIONS = {
         },
     ]
 }
+const returnToHome = () => {
+    document.querySelector('#screen-workout').classList.add('hide')
+    document.querySelector('#screen-buttons').classList.remove('hide')
+    clearInterval(workoutTimer)
+}
 
 const setClock = (numSecLeft) => {
     clockTimer = `${Math.floor(numSecLeft / 60)}:${numSecLeft % 60}`
@@ -166,6 +171,7 @@ const setClock = (numSecLeft) => {
     document.querySelector('#clock').innerHTML = clockTimer
 }
 let workoutTimer = undefined
+
 let startWorkoutFunction = () => {
     document.querySelector('#screen-buttons').classList.add('hide')
     document.querySelector('#screen-workout').classList.remove('hide') 
@@ -177,6 +183,9 @@ let startWorkoutFunction = () => {
                 () => {
                     numSecondsLeft--
                     setClock(numSecondsLeft)
+                    if(numSecondsLeft === 0) {
+                        returnToHome()  
+                    }
                 },
                 1000 * 1
             )
@@ -185,6 +194,7 @@ let startWorkoutFunction = () => {
     ) 
     
 }
+
 
 document.querySelector('#do-legs').addEventListener('click', 
     () => {
@@ -204,9 +214,7 @@ document.querySelector('#do-random').addEventListener('click',
 )
 document.querySelector('#cancel').addEventListener('click', 
     () => {
-        document.querySelector('#screen-workout').classList.add('hide')
-        document.querySelector('#screen-buttons').classList.remove('hide')
-        clearInterval(workoutTimer)
+        returnToHome()
     }
 )
 document.querySelector('#view-log').addEventListener('click', 
