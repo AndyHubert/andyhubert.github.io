@@ -6,6 +6,7 @@ const historyList = []                 //array of history of completed tasks
 let currentTask = 0                     //this will always be holding the id of the current task
 let displayedTask = currentTask         //keeps track of what task is currently being displayed, for previous and next task displays
 let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
+let keepTaskID = null
 document.querySelector(`#edit-done`).disabled = true //start off with edit-done button disabled
 
 const showCorrectScreen = (showMe) => {
@@ -37,16 +38,50 @@ const displayCurrentTask = () => {
     document.querySelector(`#add-new`).addEventListener("click", () => {
         document.querySelector(`#edit-title`).value = ''
         document.querySelector(`#edit-description`).value = ''
+        keepTaskID = null
         editTask()
     })
+
+    //when Edit is selected,send to editTask function with current task info
+    document.querySelector(`#edit`).addEventListener("click", () => {
+        document.querySelector(`#edit-title`).value = taskStack[displayedTask].title
+        document.querySelector(`#edit-description`).value = taskStack[displayedTask].description
+        keepTaskID = taskStack[displayedTask].id
+        editTask()
+    })
+
+//TODO: change the multiple querySelectors to one querySelector with a key that enters if statements    
     
+//TODO: the 'next' and 'previous' queryselectors need to be tweaked, if you keep clicking the button, 
+//displayTask keeps incrementing/decrementing even when there are no more tasks
+
+    // document.querySelector(key).addEventListener("click", () => {
+    //     if(key===`#next`){
+    //         displayedTask++
+    //         document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
+    //         document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+    //     }else if(key===`#previous`){
+    //         displayedTask--
+    //         document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
+    //         document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+    //     }
+    // }
+
+
     //when 'next->' selected, view next task according to taskStack
     document.querySelector(`#next`).addEventListener("click", () => {
         displayedTask++
         document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
         document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
     })
-    
+
+    //when '<-previous' selected, view previous task according to stack array
+    document.querySelector(`#previous`).addEventListener("click", () => {
+        displayedTask--
+        document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
+        document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+    })
+
     /*
 
     <div class="card">
@@ -57,11 +92,9 @@ const displayCurrentTask = () => {
                         <button id="check-off">✓ Check</button>
                         <button id="edit">Edit</button>
 
-    when back arrow selected -> view previous task according to stack array
     flip button should only be selectable when viewing task with id = currentTask
     edit button selectable for all tasks
     when Flip is selected -> send to flipNotes function
-    when Edit is selected -> send to editTask function
     when Trash is selected -> send to deleteTask function
     when Rotation Rectod selected -> send to rotationRecord function
     */
@@ -71,17 +104,22 @@ const displayCurrentTask = () => {
 const doneButtonDisable = (doneDisable) => {document.querySelector(`#edit-done`).disabled = doneDisable}
 
 const generateTask = () => {          
-    console.log("into generateTask")
-    //create new task and give it ID  
-    let task = {
-        title: document.querySelector(`#edit-title`).value,
-        description: document.querySelector(`#edit-description`).value,
-        date: new Date(),
-        notes: ``,
-        id: taskStack.length + 1,  // TODO: I need to use the taskStack with the reduce function to find the largest id and then add 1
+    console.log("keepTaskID = ", keepTaskID)
+
+    if(keepTaskID){
+        taskStack[displayedTask].title = document.querySelector(`#edit-title`).value
+        taskStack[displayedTask].description = document.querySelector(`#edit-description`).value
+    }else{
+        //create new task and give it ID  
+        let task = {
+            title: document.querySelector(`#edit-title`).value,
+            description: document.querySelector(`#edit-description`).value,
+            date: new Date(),
+            notes: ``,
+            id: taskStack.length + 1,  // TODO: I need to use the taskStack with the reduce function to find the largest id and then add 1
+        }
+        taskStack.push(task)
     }
-    console.log("task =", task)
-    taskStack.push(task)
     displayCurrentTask()
 }
 
@@ -98,20 +136,6 @@ const editTask = () => {
     document.querySelector(`#edit-title`).addEventListener("change", (event) => {
         doneButtonDisable(false)
     })
-
-        /*
-        if new task, all fields should be empty
-            create new task object
-        if editing task, fields should have data from id = whatever the id of the task was where edit was clicked
-        Allow to edit title
-        unhide done button as soon as title filled in
-        Allow to edit description
-        when Done selected ->
-            1)save data to task
-            2)if new, push new task to front of rotation...or give it an id that will put it where you want it???
-                return to displayCurrentTask with currentTask id = either new task or previous current task
-            3) if editing a task, return to displayCurrentTask viewing the task edited (whether it's the current task or not)
-        */
 }
 
 displayCurrentTask()
