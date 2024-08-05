@@ -25,9 +25,22 @@ document.querySelector(`#next`).addEventListener("click", () => { //view next ta
 
 document.querySelector(`#previous`).addEventListener("click", () => { //view previous task according to stack array
     displayedTask--
+
+    console.log("displayedTask = ", displayedTask)
+    console.log("taskStack[displayedTask] = ", taskStack[displayedTask])
+
     document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
     document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+})
+
+document.querySelector(`#current`).addEventListener("click", () => { //view current task according to stack array
+    displayedTask = currentTask
+
     console.log("displayedTask = ", displayedTask)
+    console.log("taskStack[displayedTask] = ", taskStack[displayedTask])
+
+    document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
+    document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
 })
 
 const showCorrectScreen = (showMe) => {    
