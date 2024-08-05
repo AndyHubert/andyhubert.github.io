@@ -1,4 +1,3 @@
-
 /*
 money in divide with math function
 a second subtractive function
