@@ -32,7 +32,7 @@ let SavingsNotes
 let StupidNotes
 let SavingsSubtract
 let StupidSubtract
-let PayAmount1
+let PayAmount
 let History = []
 
 document.querySelector(`#stupid-total`).innerHTML = 0
@@ -68,6 +68,12 @@ document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
     document.querySelector(`#tithe-total`).innerHTML = Tithes
     document.querySelector(`#savings-total`).innerHTML = Savings
     document.querySelector(`#pay-amount`).value = ''
+    const paydayHistoryItem = {
+        description: document.querySelector(`#pay-amount`).value,
+        amount: PayAmount,
+        date: Date.now(),
+        account: "payday"
+    }
 })
 
 document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => {
