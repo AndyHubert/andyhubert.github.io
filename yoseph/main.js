@@ -47,7 +47,7 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
     const savingsHistoryItem = {
         description: document.querySelector(`#savings-expense-description`).value,
         amount: SavingsSubtract,
-        date: Date.now(),  // new Date(item.date)
+        date: Date.now(),
         account: "savings"
     }
     History.push(savingsHistoryItem)
@@ -97,8 +97,19 @@ document.querySelector(`#view-history`).addEventListener(`click`, () => {
         History
             .map((info) => {
                 return `
-                    <div>
-                        ${info.date} ${info.account} ${info.amount}$ ${info.description}
+                    <div class="line">
+                        <div class="date">
+                            ${info.date}
+                        </div>
+                        <div class="account">
+                            ${info.account}
+                        </div>
+                        <div class="amount">
+                            ${info.amount}$
+                        </div>
+                        <div class="description">
+                            ${info.description}
+                        </div>
                     </div>
                 `
             })
