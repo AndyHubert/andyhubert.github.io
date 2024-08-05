@@ -99,7 +99,7 @@ document.querySelector(`#view-history`).addEventListener(`click`, () => {
                 return `
                     <div class="line">
                         <div class="date">
-                            ${info.date}
+                            ${new Date (info.date).toLocaleDateString()}
                         </div>
                         <div class="account">
                             ${info.account}
