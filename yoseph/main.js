@@ -69,11 +69,12 @@ document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
     document.querySelector(`#savings-total`).innerHTML = Savings
     document.querySelector(`#pay-amount`).value = ''
     const paydayHistoryItem = {
-        description: document.querySelector(`#pay-amount`).value,
+        description: 'payday',
         amount: PayAmount,
         date: Date.now(),
         account: "payday"
     }
+    History.push(paydayHistoryItem)
 })
 
 document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => {
