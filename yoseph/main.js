@@ -46,7 +46,7 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
     document.querySelector(`#savings-expense-amount`).value = ''
     const savingsHistoryItem = {
         description: document.querySelector(`#savings-expense-description`).value,
-        amount: SavingsSubtract,
+        amount: SavingsSubtract*-1,
         date: Date.now(),
         account: "savings"
     }
@@ -84,7 +84,7 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
     document.querySelector(`#stupid-expense-amount`).value = ''
     const stupidHistoryItem = {
         description: document.querySelector(`#stupid-expense-description`).value,
-        amount: StupidSubtract,
+        amount: StupidSubtract*-1,
         date: Date.now(),
         account: "stupid"
     }
@@ -93,6 +93,14 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
 })
 
 document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
+    const tithesHistoryItem = {
+        description: document.querySelector(`#stupid-expense-description`).value,
+        amount: Tithes*-1,
+        date: Date.now(),
+        account: "tithes",
+        description: "tithed"
+    }
+    History.push(tithesHistoryItem)
     Tithes = 0
     document.querySelector(`#tithe-total`).innerHTML = Tithes
 })
