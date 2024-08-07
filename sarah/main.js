@@ -1,10 +1,27 @@
+const safeJSONParse = (str, defaultValue) => {         //Makes sure errors aren't thrown with non parsable strings
+    let value = defaultValue
+    try {
+        value = JSON.parse(str)
+    } catch(err) {}
+    return value
+}
+const setLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+const removeLocalStorage = key => localStorage.removeItem(key)
+const getLocalStorage = (key, defaultValue) => {
+    const value = safeJSONParse(localStorage.getItem(key), defaultValue)
+    return (
+    value === null
+        ? defaultValue
+        : value
+    )
+}
+
 //NOTES: testing at http-server
 
 //Global variables and functions and querySelectors
 const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
-let currentTask = 0                     //this will always be holding the id of the current task
-let displayedTask = currentTask         //keeps track of what task is currently being displayed, for previous and next task displays
+let displayedTask = getLocalStorage(`currentTask`, 0)         //keeps track of what task is currently being displayed, for previous and next task displays
 let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
 let keepTaskID = null
 
@@ -34,13 +51,18 @@ document.querySelector(`#previous`).addEventListener("click", () => { //view pre
 })
 
 document.querySelector(`#current`).addEventListener("click", () => { //view current task according to stack array
-    displayedTask = currentTask
+    displayedTask = getLocalStorage(`currentTask`, 0)
 
     console.log("displayedTask = ", displayedTask)
     console.log("taskStack[displayedTask] = ", taskStack[displayedTask])
 
     document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
     document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+})
+
+document.querySelector(`#check-off`).addEventListener("click", () => {
+    setLocalStorage(`currentTask`, (getLocalStorage(`currentTask`, 0) + 1) % taskStack.length)
+    displayCurrentTask()
 })
 
 const showCorrectScreen = (showMe) => {    
@@ -61,8 +83,8 @@ const displayCurrentTask = () => {
     console.log("taskStack", taskStack)
 
     //Display the task with id = currentTask
-    document.querySelector(`#card-title`).innerHTML = taskStack[currentTask].title
-    document.querySelector(`#card-description`).innerHTML = taskStack[currentTask].description
+    document.querySelector(`#card-title`).innerHTML = taskStack[getLocalStorage(`currentTask`, 0)].title
+    document.querySelector(`#card-description`).innerHTML = taskStack[getLocalStorage(`currentTask`, 0)].description
 
 //TODO: change the multiple querySelectors to one querySelector with a key that enters if statements    
 
