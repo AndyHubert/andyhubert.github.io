@@ -19,7 +19,6 @@ const getLocalStorage = (key, defaultValue) => {
 //NOTES: testing at http-server
 
 //Global variables and functions and querySelectors
-const taskStack = []                   //array of active tasks
 const historyList = []                 //array of history of completed tasks
 let displayedTask = getLocalStorage(`currentTask`, 0)         //keeps track of what task is currently being displayed, for previous and next task displays
 let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
@@ -28,25 +27,25 @@ let keepTaskID = null
 document.querySelector(`#edit-done`).disabled = true //start off with edit-done button disabled
 
 document.querySelector(`#next`).addEventListener("click", () => { //view next task according to taskStack
-    displayedTask = (displayedTask + 1) % taskStack.length
-    document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
-    document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+    displayedTask = (displayedTask + 1) % getLocalStorage(`taskStack`, []).length
+    document.querySelector(`#card-title`).innerHTML = getLocalStorage(`taskStack`, [])[displayedTask].title
+    document.querySelector(`#card-description`).innerHTML = getLocalStorage(`taskStack`, [])[displayedTask].description
 })
 
 document.querySelector(`#previous`).addEventListener("click", () => { //view previous task according to stack array
-    displayedTask = (displayedTask - 1 + taskStack.length) % taskStack.length
-    document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
-    document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+    displayedTask = (displayedTask - 1 + getLocalStorage(`taskStack`, []).length) % getLocalStorage(`taskStack`, []).length
+    document.querySelector(`#card-title`).innerHTML = getLocalStorage(`taskStack`, [])[displayedTask].title
+    document.querySelector(`#card-description`).innerHTML = getLocalStorage(`taskStack`, [])[displayedTask].description
 })
 
-document.querySelector(`#current`).addEventListener("click", () => { //view current task according to stack array
+document.querySelector(`#current`).addEventListener("click", () => { //view current task according to locally saved number
     displayedTask = getLocalStorage(`currentTask`, 0)
-    document.querySelector(`#card-title`).innerHTML = taskStack[displayedTask].title
-    document.querySelector(`#card-description`).innerHTML = taskStack[displayedTask].description
+    document.querySelector(`#card-title`).innerHTML = getLocalStorage(`taskStack`, [])[displayedTask].title
+    document.querySelector(`#card-description`).innerHTML = getLocalStorage(`taskStack`, [])[displayedTask].description
 })
 
 document.querySelector(`#check-off`).addEventListener("click", () => {
-    setLocalStorage(`currentTask`, (getLocalStorage(`currentTask`, 0) + 1) % taskStack.length)
+    setLocalStorage(`currentTask`, (getLocalStorage(`currentTask`, 0) + 1) % getLocalStorage(`taskStack`, []).length)
     displayCurrentTask()
 })
 
@@ -63,15 +62,15 @@ const displayCurrentTask = () => {
     //Hide previous screen and show displayCurrentTask screen
     showCorrectScreen(`#screen-main`)
     
-    console.log("taskStack length = ", taskStack.length)
-    if(taskStack.length === 0){
+    console.log("taskStack length = ", getLocalStorage(`taskStack`, []).length)
+    if(getLocalStorage(`taskStack`, []).length === 0){
         editTask()
     }
-    console.log("taskStack", taskStack)
+    console.log("getLocalStorage(`taskStack`, [])", getLocalStorage(`taskStack`, []))
 
     //Display the task with id = currentTask
-    document.querySelector(`#card-title`).innerHTML = taskStack[getLocalStorage(`currentTask`, 0)].title
-    document.querySelector(`#card-description`).innerHTML = taskStack[getLocalStorage(`currentTask`, 0)].description
+    document.querySelector(`#card-title`).innerHTML = getLocalStorage(`taskStack`, [])[getLocalStorage(`currentTask`, 0)].title
+    document.querySelector(`#card-description`).innerHTML = getLocalStorage(`taskStack`, [])[getLocalStorage(`currentTask`, 0)].description
 
     /*
 
@@ -99,10 +98,11 @@ const generateTask = () => {
     console.log("displayedTask = ", displayedTask)
 
     if(keepTaskID){
-        taskStack[displayedTask].title = document.querySelector(`#edit-title`).value
-        taskStack[displayedTask].description = document.querySelector(`#edit-description`).value
+        getLocalStorage(`taskStack`, [])[displayedTask].title = document.querySelector(`#edit-title`).value
+        getLocalStorage(`taskStack`, [])[displayedTask].description = document.querySelector(`#edit-description`).value
     }else{
         //create new task and give it ID  
+        const taskStack = getLocalStorage(`taskStack`, [])
         let task = {
             title: document.querySelector(`#edit-title`).value,
             description: document.querySelector(`#edit-description`).value,
@@ -111,6 +111,7 @@ const generateTask = () => {
             id: taskStack.length + 1,  // TODO: I need to use the taskStack with the reduce function to find the largest id and then add 1
         }
         taskStack.push(task)
+        setLocalStorage(`taskStack`, taskStack)
     }
     displayCurrentTask()
 }
@@ -144,11 +145,11 @@ document.querySelector(`#add-new`).addEventListener("click", () => {
 document.querySelector(`#edit`).addEventListener("click", () => {
     
     console.log("displayedTask=", displayedTask)
-    console.log("taskStack[displayedTask] = ", taskStack[displayedTask])
+    console.log("taskStack[displayedTask] = ", getLocalStorage(`taskStack`, [])[displayedTask])
 
-    document.querySelector(`#edit-title`).value = taskStack[displayedTask].title
-    document.querySelector(`#edit-description`).value = taskStack[displayedTask].description
-    keepTaskID = taskStack[displayedTask].id
+    document.querySelector(`#edit-title`).value = getLocalStorage(`taskStack`, [])[displayedTask].title
+    document.querySelector(`#edit-description`).value = getLocalStorage(`taskStack`, [])[displayedTask].description
+    keepTaskID = getLocalStorage(`taskStack`, [])[displayedTask].id
     editTask()
 })
 
