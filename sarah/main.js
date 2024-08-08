@@ -1,3 +1,6 @@
+//NOTES: testing at http-server
+
+
 const safeJSONParse = (str, defaultValue) => {         //Makes sure errors aren't thrown with non parsable strings
     let value = defaultValue
     try {
@@ -15,8 +18,6 @@ const getLocalStorage = (key, defaultValue) => {
         : value
     )
 }
-
-//NOTES: testing at http-server
 
 //Global variables and functions and querySelectors
 const historyList = []                 //array of history of completed tasks
@@ -73,15 +74,7 @@ const displayCurrentTask = () => {
     document.querySelector(`#card-description`).innerHTML = getLocalStorage(`taskStack`, [])[getLocalStorage(`currentTask`, 0)].description
 
     /*
-
-    <div class="card">
-                    <div class="card-heading">Current Task</div>
-                    <div id="card-title"></div>
-                    <div id="card-description"></div>
-                    <div class="card-buttons">
-                        <button id="check-off">✓ Check</button>
-                        <button id="edit">Edit</button>
-
+    TODO
     flip button should only be selectable when viewing task with id = currentTask
     edit button selectable for all tasks
     when Flip is selected -> send to flipNotes function
@@ -116,8 +109,11 @@ const generateTask = () => {
     displayCurrentTask()
 }
 
-//global eventlistener on done button to generate task
+//global eventlistener on edit done button to generate task
 document.querySelector(`#edit-done`).addEventListener("click", generateTask)
+
+//global eventlistener on hisory back button to return to display current task
+document.querySelector(`#history-back`).addEventListener("click", displayCurrentTask)
 
 
 const editTask = () => {
@@ -153,7 +149,24 @@ document.querySelector(`#edit`).addEventListener("click", () => {
     editTask()
 })
 
+//When View History is selected, send to rotationRecord
+document.querySelector(`#view-history`).addEventListener("click", () => {
+    rotationRecord()
+})
+
+const rotationRecord = () => {
+    
+    //Hide previous screen and show history screen
+    showCorrectScreen(`#screen-history`)
+
+    /* TODO
+    If task selected -> taskRecord(selected task)
+    If Done selected -> return to displayCurrentTask
+    */
+}
+
 displayCurrentTask()
+
 
 const flipNotes = () => {
     /*
@@ -177,14 +190,6 @@ const deleteTask = () => {
         1)take task out of rotation, but don't delete data (it still needs to show up with notes in Rotation Record) 
         2)return to displayCurrentTask with next task showing
     if no ->return (no action done)
-    */
-}
-
-const rotationRecord = () => {
-    /*
-    Display Rotation Record
-    If task selected -> taskRecord(selected task)
-    If Done selected -> return to displayCurrentTask
     */
 }
 
