@@ -115,10 +115,12 @@ const calculations = () => {
 calculations()
 
 document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {
+    const amount = document.querySelector(`#savings-expense-amount`).value
+    if(!/^[0-9.]+$/.test(amount)) return
     const History = getLocalStorage('History', [])
     const savingsHistoryItem = {
         description: document.querySelector(`#savings-expense-description`).value,
-        amount: document.querySelector(`#savings-expense-amount`).value*-1,
+        amount: amount*-1,
         date: Date.now(),
         account: "savings"
     }
@@ -130,10 +132,12 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 })
 
 document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
+    const amount = document.querySelector(`#pay-amount`).value
+    if(!/^[0-9.]+$/.test(amount)) return
     const History = getLocalStorage('History', [])
     const paydayHistoryItem = {
         description: 'payday',
-        amount: document.querySelector(`#pay-amount`).value,
+        amount: amount,
         date: Date.now(),
         account: "payday"
     }
@@ -144,10 +148,12 @@ document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
 })
 
 document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => {
+    const amount = document.querySelector(`#stupid-expense-amount`).value
+    if(!/^[0-9.]+$/.test(amount)) return
     const History = getLocalStorage('History', [])
     const stupidHistoryItem = {
         description: document.querySelector(`#stupid-expense-description`).value,
-        amount: document.querySelector(`#stupid-expense-amount`).value*-1,
+        amount: amount*-1,
         date: Date.now(),
         account: "stupid"
     }
