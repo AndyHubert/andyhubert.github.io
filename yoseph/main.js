@@ -1,30 +1,3 @@
-/*
-money in divide with math function
-a second subtractive function
-make the money displayes into varialbes
-the empty button simply makes t-money display 0
-the subtractive inputs subtract le number (in the form of a veriable) from u/s money display, and recordes?
-history??? but how!? (continued):
-make both money and explenation a single string, then add to array? or...
-add both to object and add object to array?
-or give up!!!!!!!! (definitly this one)
-*/
-
-//http-server
-
-/* examples
-
-let currentVal = document.querySelector(`#savings-expense-description`).value   = input
-
-document.querySelector(`#savings-total`).innerHTML                              = output
-
-document.querySelector(`#screen-main`).classList.add(`hide`)
-document.querySelector(`#screen-history`).classList.remove(`hide`)              = change page
-
-document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {       = button
-})
-    */
-
 let savingsNotes 
 let stupidNotes
 
@@ -183,23 +156,3 @@ document.querySelector(`#back`).addEventListener(`click`, () => {
     document.querySelector(`#screen-history`).classList.add(`hide`)
     calculations()
 })
-
-/*
-const calculations = () => {
-    let savings = 0
-    let stupid = 0
-    let tithes = 0    
-    history.forEach(historyItem => {
-        if(historyItem.account === `payday`) {
-            console.log(`payday`, historyItem.amount)
-        } else if(historyItem.account === `savings`) {
-            console.log(`savings`, historyItem.amount)
-        } else if(historyItem.account === `stupid`) {
-            console.log(`stupid`, historyItem.amount)
-        } else if(historyItem.account === `tithes`) {
-            console.log(`tithes`, historyItem.amount)
-        }
-    })
-    console.log('savings', savings)
-}
-*/
