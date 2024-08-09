@@ -43,7 +43,7 @@ const historyRender = () => {
                             ${info.account}
                         </div>
                         <div class="amount">
-                            ${info.amount}$
+                            ${info.amount.toFixed(2)}$
                         </div>
                         <div class="description">
                             ${info.description}
@@ -107,10 +107,9 @@ const calculations = () => {
             Tithes = Tithes - tithesAmount
         }
     })
-    document.querySelector(`#stupid-total`).innerHTML = Stupid
-    document.querySelector(`#tithe-total`).innerHTML = Tithes
-    document.querySelector(`#savings-total`).innerHTML = Savings
-    console.log('stupid', Stupid, 'savings', Savings, 'tithes', Tithes)
+    document.querySelector(`#stupid-total`).innerHTML = Stupid.toFixed(2)
+    document.querySelector(`#tithe-total`).innerHTML = Tithes.toFixed(2)
+    document.querySelector(`#savings-total`).innerHTML = Savings.toFixed(2)
 }
 calculations()
 
@@ -137,7 +136,7 @@ document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
     const History = getLocalStorage('History', [])
     const paydayHistoryItem = {
         description: 'payday',
-        amount: amount,
+        amount: Number(amount),
         date: Date.now(),
         account: "payday"
     }
