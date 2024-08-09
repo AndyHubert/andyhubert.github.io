@@ -25,15 +25,68 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 })
     */
 
-let SavingsNotes
+let SavingsNotes 
 let StupidNotes
-let History = []
+
+const historyRender = () => {
+    document.querySelector(`#screen-main`).classList.add(`hide`)
+    document.querySelector(`#screen-history`).classList.remove(`hide`)
+    const viewHistory = (
+        getLocalStorage('History', [])
+            .map((info, idx) => {
+                return `
+                    <div class="line">
+                        <div class="date">
+                            ${new Date (info.date).toLocaleDateString()}
+                        </div>
+                        <div class="account">
+                            ${info.account}
+                        </div>
+                        <div class="amount">
+                            ${info.amount}$
+                        </div>
+                        <div class="description">
+                            ${info.description}
+                        </div>
+                        <button onClick="deleteHistoryLine(${idx})">DELETE</button>
+                    </div>
+                `
+            })
+            .join(`\n`)
+    )
+    document.querySelector('#history-content').innerHTML = viewHistory }
+
+const safeJSONParse = (str, defaultValue) => {
+    let value = defaultValue
+    try {
+        value = JSON.parse(str)
+    } catch(err) {}
+    return value
+}
+const setLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+const removeLocalStorage = key => localStorage.removeItem(key)
+const getLocalStorage = (key, defaultValue) => {
+    const value = safeJSONParse(localStorage.getItem(key), defaultValue)
+    return (
+    value === null
+        ? defaultValue
+        : value
+    )
+}
+
+const deleteHistoryLine = (idx) => {
+    let History = getLocalStorage('History', [])
+    History.splice(idx,1)
+    setLocalStorage('History', History)
+    calculations()
+    historyRender()
+}
 
 const calculations = () => {  
     let Savings = 0
     let Stupid = 0
     let Tithes = 0
-    History.forEach(historyItem => {
+    getLocalStorage('History', []).forEach(historyItem => {
         if(historyItem.account === "payday") {
             let PayAmount = historyItem.amount
             let PayAmount1 = PayAmount / 4
@@ -50,7 +103,7 @@ const calculations = () => {
             let StupidSubtract = historyItem.amount*-1
             Stupid = Stupid - StupidSubtract
         } else if(historyItem.account === `tithes`) {
-            let tithesAmount = document.querySelector(`#tithe-total`).innerHTML
+            let tithesAmount = historyItem.amount*-1
             Tithes = Tithes - tithesAmount
         }
     })
@@ -62,6 +115,7 @@ const calculations = () => {
 calculations()
 
 document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {
+    const History = getLocalStorage('History', [])
     const savingsHistoryItem = {
         description: document.querySelector(`#savings-expense-description`).value,
         amount: document.querySelector(`#savings-expense-amount`).value*-1,
@@ -69,12 +123,14 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
         account: "savings"
     }
     History.push(savingsHistoryItem)
+    setLocalStorage('History', History)
     document.querySelector(`#savings-expense-description`).value = ''
     document.querySelector(`#savings-expense-amount`).value = ''
     calculations()
 })
 
 document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
+    const History = getLocalStorage('History', [])
     const paydayHistoryItem = {
         description: 'payday',
         amount: document.querySelector(`#pay-amount`).value,
@@ -82,11 +138,13 @@ document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
         account: "payday"
     }
     History.push(paydayHistoryItem)
+    setLocalStorage('History', History)
     document.querySelector(`#pay-amount`).value = ''
     calculations()
 })
 
 document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => {
+    const History = getLocalStorage('History', [])
     const stupidHistoryItem = {
         description: document.querySelector(`#stupid-expense-description`).value,
         amount: document.querySelector(`#stupid-expense-amount`).value*-1,
@@ -94,12 +152,14 @@ document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => 
         account: "stupid"
     }
     History.push(stupidHistoryItem)
+    setLocalStorage('History', History)
     document.querySelector(`#stupid-expense-description`).value = ''
     document.querySelector(`#stupid-expense-amount`).value = ''
     calculations()
 })
 
 document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
+    const History = getLocalStorage('History', [])
     const tithesHistoryItem = {
         amount: document.querySelector(`#tithe-total`).innerHTML*-1,
         date: Date.now(),
@@ -107,35 +167,11 @@ document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
         description: "tithed"
     }
     History.push(tithesHistoryItem)
+    setLocalStorage('History', History)
     calculations()
 })
 
-document.querySelector(`#view-history`).addEventListener(`click`, () => {
-    document.querySelector(`#screen-main`).classList.add(`hide`)
-    document.querySelector(`#screen-history`).classList.remove(`hide`)
-    const viewHistory = (
-        History
-            .map((info) => {
-                return `
-                    <div class="line">
-                        <div class="date">
-                            ${new Date (info.date).toLocaleDateString()}
-                        </div>
-                        <div class="account">
-                            ${info.account}
-                        </div>
-                        <div class="amount">
-                            ${info.amount}$
-                        </div>
-                        <div class="description">
-                            ${info.description}
-                        </div>
-                    </div>
-                `
-            })
-            .join(`\n`)
-    )
-    document.querySelector('#history-content').innerHTML = viewHistory })
+document.querySelector(`#view-history`).addEventListener(`click`, historyRender)
 
 document.querySelector(`#back`).addEventListener(`click`, () => {
     document.querySelector(`#screen-main`).classList.remove(`hide`)
