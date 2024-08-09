@@ -25,14 +25,14 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 })
     */
 
-let SavingsNotes 
-let StupidNotes
+let savingsNotes 
+let stupidNotes
 
 const historyRender = () => {
     document.querySelector(`#screen-main`).classList.add(`hide`)
     document.querySelector(`#screen-history`).classList.remove(`hide`)
     const viewHistory = (
-        getLocalStorage('History', [])
+        getLocalStorage('history', [])
             .map((info, idx) => {
                 return `
                     <div class="line">
@@ -75,56 +75,56 @@ const getLocalStorage = (key, defaultValue) => {
 }
 
 const deleteHistoryLine = (idx) => {
-    let History = getLocalStorage('History', [])
-    History.splice(idx,1)
-    setLocalStorage('History', History)
+    let history = getLocalStorage('history', [])
+    history.splice(idx,1)
+    setLocalStorage('history', history)
     calculations()
     historyRender()
 }
 
 const calculations = () => {  
-    let Savings = 0
-    let Stupid = 0
-    let Tithes = 0
-    getLocalStorage('History', []).forEach(historyItem => {
+    let savings = 0
+    let stupid = 0
+    let tithes = 0
+    getLocalStorage('history', []).forEach(historyItem => {
         if(historyItem.account === "payday") {
             let PayAmount = historyItem.amount
             let PayAmount1 = PayAmount / 4
             let PayAmount2 = PayAmount / 10
             let PayAmount3 = PayAmount / 100
             PayAmount3 = PayAmount3 * 65
-            Savings = Savings + PayAmount3
-            Stupid = Stupid + PayAmount1
-            Tithes = Tithes + PayAmount2
+            savings = savings + PayAmount3
+            stupid = stupid + PayAmount1
+            tithes = tithes + PayAmount2
         } else if(historyItem.account === `savings`) {
             let SavingsSubtract = historyItem.amount*-1
-            Savings = Savings - SavingsSubtract
+            savings = savings - SavingsSubtract
         } else if(historyItem.account === `stupid`) {
             let StupidSubtract = historyItem.amount*-1
-            Stupid = Stupid - StupidSubtract
+            stupid = stupid - StupidSubtract
         } else if(historyItem.account === `tithes`) {
             let tithesAmount = historyItem.amount*-1
-            Tithes = Tithes - tithesAmount
+            tithes = tithes - tithesAmount
         }
     })
-    document.querySelector(`#stupid-total`).innerHTML = Stupid.toFixed(2)
-    document.querySelector(`#tithe-total`).innerHTML = Tithes.toFixed(2)
-    document.querySelector(`#savings-total`).innerHTML = Savings.toFixed(2)
+    document.querySelector(`#stupid-total`).innerHTML = stupid.toFixed(2)
+    document.querySelector(`#tithe-total`).innerHTML = tithes.toFixed(2)
+    document.querySelector(`#savings-total`).innerHTML = savings.toFixed(2)
 }
 calculations()
 
 document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {
     const amount = document.querySelector(`#savings-expense-amount`).value
     if(!/^[0-9.]+$/.test(amount)) return
-    const History = getLocalStorage('History', [])
+    const history = getLocalStorage('history', [])
     const savingsHistoryItem = {
         description: document.querySelector(`#savings-expense-description`).value,
         amount: amount*-1,
         date: Date.now(),
         account: "savings"
     }
-    History.push(savingsHistoryItem)
-    setLocalStorage('History', History)
+    history.push(savingsHistoryItem)
+    setLocalStorage('history', history)
     document.querySelector(`#savings-expense-description`).value = ''
     document.querySelector(`#savings-expense-amount`).value = ''
     calculations()
@@ -133,15 +133,15 @@ document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () =>
 document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
     const amount = document.querySelector(`#pay-amount`).value
     if(!/^[0-9.]+$/.test(amount)) return
-    const History = getLocalStorage('History', [])
+    const history = getLocalStorage('history', [])
     const paydayHistoryItem = {
         description: 'payday',
         amount: Number(amount),
         date: Date.now(),
         account: "payday"
     }
-    History.push(paydayHistoryItem)
-    setLocalStorage('History', History)
+    history.push(paydayHistoryItem)
+    setLocalStorage('history', history)
     document.querySelector(`#pay-amount`).value = ''
     calculations()
 })
@@ -149,30 +149,30 @@ document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
 document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => {
     const amount = document.querySelector(`#stupid-expense-amount`).value
     if(!/^[0-9.]+$/.test(amount)) return
-    const History = getLocalStorage('History', [])
+    const history = getLocalStorage('history', [])
     const stupidHistoryItem = {
         description: document.querySelector(`#stupid-expense-description`).value,
         amount: amount*-1,
         date: Date.now(),
         account: "stupid"
     }
-    History.push(stupidHistoryItem)
-    setLocalStorage('History', History)
+    history.push(stupidHistoryItem)
+    setLocalStorage('history', history)
     document.querySelector(`#stupid-expense-description`).value = ''
     document.querySelector(`#stupid-expense-amount`).value = ''
     calculations()
 })
 
 document.querySelector(`#tithe-clear`).addEventListener(`click`, () => {
-    const History = getLocalStorage('History', [])
+    const history = getLocalStorage('history', [])
     const tithesHistoryItem = {
         amount: document.querySelector(`#tithe-total`).innerHTML*-1,
         date: Date.now(),
         account: "tithes",
         description: "tithed"
     }
-    History.push(tithesHistoryItem)
-    setLocalStorage('History', History)
+    history.push(tithesHistoryItem)
+    setLocalStorage('history', history)
     calculations()
 })
 
@@ -186,10 +186,10 @@ document.querySelector(`#back`).addEventListener(`click`, () => {
 
 /*
 const calculations = () => {
-    let Savings = 0
-    let Stupid = 0
-    let Tithes = 0    
-    History.forEach(historyItem => {
+    let savings = 0
+    let stupid = 0
+    let tithes = 0    
+    history.forEach(historyItem => {
         if(historyItem.account === `payday`) {
             console.log(`payday`, historyItem.amount)
         } else if(historyItem.account === `savings`) {
@@ -200,6 +200,6 @@ const calculations = () => {
             console.log(`tithes`, historyItem.amount)
         }
     })
-    console.log('Savings', Savings)
+    console.log('savings', savings)
 }
 */
