@@ -1,6 +1,3 @@
-let savingsNotes 
-let stupidNotes
-
 const historyRender = () => {
     document.querySelector(`#screen-main`).classList.add(`hide`)
     document.querySelector(`#screen-history`).classList.remove(`hide`)
@@ -27,7 +24,8 @@ const historyRender = () => {
             })
             .join(`\n`)
     )
-    document.querySelector('#history-content').innerHTML = viewHistory }
+    document.querySelector('#history-content').innerHTML = viewHistory
+}
 
 const safeJSONParse = (str, defaultValue) => {
     let value = defaultValue
@@ -84,7 +82,6 @@ const calculations = () => {
     document.querySelector(`#tithe-total`).innerHTML = tithes.toFixed(2)
     document.querySelector(`#savings-total`).innerHTML = savings.toFixed(2)
 }
-calculations()
 
 document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {
     const amount = document.querySelector(`#savings-expense-amount`).value
@@ -156,3 +153,5 @@ document.querySelector(`#back`).addEventListener(`click`, () => {
     document.querySelector(`#screen-history`).classList.add(`hide`)
     calculations()
 })
+
+calculations()
