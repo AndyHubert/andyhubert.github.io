@@ -4,6 +4,24 @@ setTimeout(
     },
     300  
 )
+const safeJSONParse = (str, defaultValue) => {         
+    let value = defaultValue
+    try {
+        value = JSON.parse(str)
+    } catch(err) {}
+    return value
+}
+const setLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+const removeLocalStorage = key => localStorage.removeItem(key)
+const getLocalStorage = (key, defaultValue) => {
+    const value = safeJSONParse(localStorage.getItem(key), defaultValue)
+    return (
+    value === null
+        ? defaultValue
+        : value
+    )
+}
+
 const STARTING_SECONDS = 5 //15 * 60 
 const WORKOUT_OPTIONS = {
     legs: [
@@ -156,6 +174,9 @@ const WORKOUT_OPTIONS = {
         },
     ]
 }
+
+let workOutType = undefined
+
 const returnToHome = () => {
     document.querySelector('#screen-workout').classList.add('hide')
     document.querySelector('#screen-buttons').classList.remove('hide')
@@ -170,12 +191,24 @@ const setClock = (numSecLeft) => {
     }
     document.querySelector('#clock').innerHTML = clockTimer
 }
+const logTime = () => {
+    const secondsDone = STARTING_SECONDS - numSecondsLeft
+    writeLog = `${Math.floor(secondsDone / 60)}:${secondsDone % 60}`
+    let seconds = secondsDone % 60
+    if(seconds <= 9){
+        writeLog = `${Math.floor(secondsDone / 60)}:0${secondsDone % 60}`
+    }
+    if(secondsDone === STARTING_SECONDS){
+        writeLog = "completed"
+    }
+    return writeLog
+}
 let workoutTimer = undefined
-
+let numSecondsLeft = STARTING_SECONDS
 let startWorkoutFunction = () => {
     document.querySelector('#screen-buttons').classList.add('hide')
-    document.querySelector('#screen-workout').classList.remove('hide') 
-    let numSecondsLeft = STARTING_SECONDS
+    document.querySelector('#screen-workout').classList.remove('hide')
+    numSecondsLeft = STARTING_SECONDS
     setClock(numSecondsLeft)
     setTimeout(
         () => {
@@ -184,6 +217,7 @@ let startWorkoutFunction = () => {
                     numSecondsLeft--
                     setClock(numSecondsLeft)
                     if(numSecondsLeft === 0) {
+                        logMyWorkout()
                         returnToHome()  
                     }
                 },
@@ -195,30 +229,60 @@ let startWorkoutFunction = () => {
     
 }
 
+const logMyWorkout = () => {
+    let logHistory = getLocalStorage('logHistory',[])
+    const workoutLoging = {
+        date: Date.now(),
+        nameOfWorkout: workOutType,
+        howFarLeft: logTime(),
+    }
+    logHistory.push(workoutLoging)
+    setLocalStorage(`logHistory`, logHistory) 
+}
+
+
 
 document.querySelector('#do-legs').addEventListener('click', 
     () => {
-        console.log('hi')
+        workOutType = "legs"
         startWorkoutFunction()
     }
 )
 document.querySelector('#do-arms').addEventListener('click', 
     () => {
+        workOutType = "arms"
         startWorkoutFunction()
     }
 )
 document.querySelector('#do-random').addEventListener('click', 
     () => {
+        workOutType = "random"
         startWorkoutFunction()
     }
 )
 document.querySelector('#cancel').addEventListener('click', 
     () => {
+        console.log('haalloo')
         returnToHome()
+        logMyWorkout()
     }
 )
 document.querySelector('#view-log').addEventListener('click', 
     () => {
+
+        const theHistory = (
+            getLocalStorage('logHistory',[])
+
+                .map((aSpecificWorkout) => {
+                    return `
+                        <div>
+                            ${new Date(aSpecificWorkout.date).toLocaleDateString()}, ${aSpecificWorkout.nameOfWorkout}, ${aSpecificWorkout.howFarLeft}
+                        </div>
+                    `
+                })
+                .join(``)
+        )
+        document.querySelector('#log-details').innerHTML = theHistory
         document.querySelector('#screen-buttons').classList.add('hide')
         document.querySelector('#screen-log').classList.remove('hide')
     }
