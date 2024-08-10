@@ -177,9 +177,10 @@ const rotationRecord = () => {
             })
             .join(``)
     )
-    document.querySelector(`#screen-history`).innerHTML = historyItems
+    document.querySelector(`#history`).innerHTML = historyItems
 
     /* TODO
+    Make the task list prettier and more readable
     If task selected -> taskRecord(selected task)
     */
 }
