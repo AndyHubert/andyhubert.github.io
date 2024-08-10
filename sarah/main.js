@@ -20,7 +20,6 @@ const getLocalStorage = (key, defaultValue) => {
 }
 
 //Global variables and functions and querySelectors
-const historyList = []                 //array of history of completed tasks
 let displayedTask = getLocalStorage(`currentTask`, 0)         //keeps track of what task is currently being displayed, for previous and next task displays
 let currentScreen = `#screen-main`      //keeps track of currentScreen to hide it
 let keepTaskID = null
@@ -46,6 +45,12 @@ document.querySelector(`#current`).addEventListener("click", () => { //view curr
 })
 
 document.querySelector(`#check-off`).addEventListener("click", () => {
+    const historyList = getLocalStorage(`historyList`, [])
+    const checkedTask = getLocalStorage(`taskStack`, [])[getLocalStorage(`currentTask`, 0)]
+    checkedTask.dateCompleted = new Date()
+    historyList.push(checkedTask)
+    setLocalStorage(`historyList`,historyList)
+
     setLocalStorage(`currentTask`, (getLocalStorage(`currentTask`, 0) + 1) % getLocalStorage(`taskStack`, []).length)
     displayCurrentTask()
 })
@@ -99,7 +104,8 @@ const generateTask = () => {
         let task = {
             title: document.querySelector(`#edit-title`).value,
             description: document.querySelector(`#edit-description`).value,
-            date: new Date(),
+            dateCreated: new Date(),
+            dateCompleted: ``,
             notes: ``,
             id: taskStack.length + 1,  // TODO: I need to use the taskStack with the reduce function to find the largest id and then add 1
         }
@@ -155,13 +161,26 @@ document.querySelector(`#view-history`).addEventListener("click", () => {
 })
 
 const rotationRecord = () => {
-    
+
     //Hide previous screen and show history screen
     showCorrectScreen(`#screen-history`)
+    
+    let historyItems = (
+        getLocalStorage(`historyList`, [])
+            .map((task) => {
+                return `
+                    <div>
+                        ${task.title}, ${task.description}, ${task.dateCreated}, ${task.notes}, ${task.id}, ${task.dateCompleted}
+      
+                  </div>
+                `
+            })
+            .join(``)
+    )
+    document.querySelector(`#screen-history`).innerHTML = historyItems
 
     /* TODO
     If task selected -> taskRecord(selected task)
-    If Done selected -> return to displayCurrentTask
     */
 }
 
