@@ -22,7 +22,7 @@ const getLocalStorage = (key, defaultValue) => {
     )
 }
 
-const STARTING_SECONDS = 5 //15 * 60 
+const STARTING_SECONDS = 25 //15 * 60 
 const WORKOUT_OPTIONS = {
     legs: [
         {
@@ -30,7 +30,7 @@ const WORKOUT_OPTIONS = {
             workout: [
               `
      _____
-    |     |
+    | ' ' |
     |     |
      -----
        |
@@ -44,7 +44,7 @@ const WORKOUT_OPTIONS = {
               `,  
               `
      _____
-    |     |
+    | ' ' |
     |     |
      -----
        |
@@ -56,7 +56,7 @@ const WORKOUT_OPTIONS = {
               `,
               `
      _____
-    |     |
+    | ' ' |
     |     |
      -----
        |
@@ -119,9 +119,45 @@ const WORKOUT_OPTIONS = {
         {
             name: "walking squat",
             workout: [
-              `move 1`, 
-              `move 2`,
-              `move 3`,
+              `
+     _____
+    |     |
+    |     |
+     -----
+       |
+-------|-------
+       |
+       |
+     |   |
+     |   |    
+     |   |    
+     |   |`, 
+              `
+     _____
+    |     |
+    |     |
+     -----
+       |
+-------|-------
+       |
+       ||
+     |  | 
+     |  |     
+     |       
+     |   `,
+              `
+     _____
+    |     |
+    |     |
+     -----
+       |
+-------|-------
+       |
+     | |
+     |   |
+     |   |    
+         |    
+         |`,
             ]
     
         },
@@ -131,13 +167,25 @@ const WORKOUT_OPTIONS = {
             name: "pushup",
             workout: [
               `
-              move 1
+      ____
+     |    |
+      -  - 
+     /    \\
+    |      |
               `,  
               `
-              move 2
+             
+      ____
+     |    |
+    / -  - \\
+    \\      /
               `,
               `
-              move 3
+      ____
+     |    |
+      -  - 
+     /    \\
+    |      |
               `,
             ]
     
@@ -146,14 +194,22 @@ const WORKOUT_OPTIONS = {
             name: "turning plank",
             workout: [
               `
-              move 1
-              `, 
+              ____
+             |    |
+              ---- 
+             /    \\
+            ---  ---                `, 
+        ` ___     /       
+         |   |   /      
+         |___|  /          
+            |   
+            ---                  `,
               `
-              move 2
-              `,
-              `
-              move 3
-              `,
+              ____
+             |    |
+              ---- 
+             /    \\
+            ---  ---                `,
             ]
     
         },
@@ -161,13 +217,25 @@ const WORKOUT_OPTIONS = {
             name: "cobra pushups",
             workout: [
               `
-              move 1
+              ____
+             |    |
+              ---- 
+             /    \\
+            |      |
               `,  
               `
-              move 2
+              ____
+             |    |
+              ---- 
+             /    \\
+            |      |
               `,
               `
-              move 3
+              ____
+             |    |
+              ---- 
+             /    \\
+            |      |
               `,
             ]
     
@@ -176,7 +244,7 @@ const WORKOUT_OPTIONS = {
 }
 
 let workOutType = undefined
-
+let intervalId = undefined
 const returnToHome = () => {
     document.querySelector('#screen-workout').classList.add('hide')
     document.querySelector('#screen-buttons').classList.remove('hide')
@@ -203,11 +271,40 @@ const logTime = () => {
     }
     return writeLog
 }
+let typeOfTrack = undefined
 let workoutTimer = undefined
 let numSecondsLeft = STARTING_SECONDS
-let startWorkoutFunction = () => {
+
+let startWorkoutFunction = (type) => {
+    // console.log(type)
+    if(type === "arms"){
+        typeOfTrack = "arms"
+    }
+    // console.log(typeOfTrack)
+    if(type === "legs"){
+        typeOfTrack = "legs"
+    }
+    if(type === "random"){
+        typeOfTrack = "random"  
+    }
+    console.log(typeOfTrack)
     document.querySelector('#screen-buttons').classList.add('hide')
     document.querySelector('#screen-workout').classList.remove('hide')
+    document.querySelector('#stick-figure').innerHTML = `
+     _____
+    | ' ' |
+    |     |
+     -----
+       |
+-------|-------
+       |
+       |
+      / \\
+     /   \\
+    /     \\
+   /       \\
+
+`
     numSecondsLeft = STARTING_SECONDS
     setClock(numSecondsLeft)
     setTimeout(
@@ -218,15 +315,41 @@ let startWorkoutFunction = () => {
                     setClock(numSecondsLeft)
                     if(numSecondsLeft === 0) {
                         logMyWorkout()
-                        returnToHome()  
+                        returnToHome()
+                        clearInterval(intervalId)  
                     }
                 },
                 1000 * 1
             )
         },
         100
+    )
+    setTimeout( 
+        () => {
+            let keepTrack = 0
+            intervalId = setInterval( 
+                () => {
+                    console.log(typeOfTrack)
+                   if(typeOfTrack === "arms"){
+                        document.querySelector('#stick-figure').innerHTML = WORKOUT_OPTIONS.arms[0].workout[keepTrack]
+                        keepTrack++
+                        if(keepTrack === 3){
+                        keepTrack = 0
+                        }
+                   } 
+                   if(typeOfTrack === "legs"){
+                        document.querySelector('#stick-figure').innerHTML = WORKOUT_OPTIONS.legs[0].workout[keepTrack]
+                        keepTrack++
+                        if(keepTrack === 3){
+                        keepTrack = 0
+                        }
+                   }
+                },
+                500
+            )
+        },
+        500   
     ) 
-    
 }
 
 const logMyWorkout = () => {
@@ -245,19 +368,20 @@ const logMyWorkout = () => {
 document.querySelector('#do-legs').addEventListener('click', 
     () => {
         workOutType = "legs"
-        startWorkoutFunction()
+        startWorkoutFunction("legs")
     }
 )
 document.querySelector('#do-arms').addEventListener('click', 
     () => {
         workOutType = "arms"
-        startWorkoutFunction()
+        startWorkoutFunction("arms")
     }
 )
 document.querySelector('#do-random').addEventListener('click', 
     () => {
         workOutType = "random"
-        startWorkoutFunction()
+        let choices = ["arms", "legs"]
+        startWorkoutFunction(choices[randomness = parseInt(Math.random() * 2)])
     }
 )
 document.querySelector('#cancel').addEventListener('click', 
@@ -265,6 +389,7 @@ document.querySelector('#cancel').addEventListener('click',
         console.log('haalloo')
         returnToHome()
         logMyWorkout()
+        clearInterval(intervalId)
     }
 )
 document.querySelector('#view-log').addEventListener('click', 
@@ -296,7 +421,7 @@ document.querySelector('#back').addEventListener('click',
 
 document.querySelector('#stick-figure').innerHTML = `
      _____
-    |     |
+    | ' ' |
     |     |
      -----
        |
@@ -307,6 +432,7 @@ document.querySelector('#stick-figure').innerHTML = `
      /   \\
     /     \\
    /       \\
+
 `
 
         
