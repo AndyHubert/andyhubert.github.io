@@ -1,28 +1,6 @@
-setTimeout( 
-    () => {
-        document.querySelector('#screen-buttons').classList.remove('hide')  
-    },
-    300  
-)
-const safeJSONParse = (str, defaultValue) => {         
-    let value = defaultValue
-    try {
-        value = JSON.parse(str)
-    } catch(err) {}
-    return value
-}
-const setLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
-const removeLocalStorage = key => localStorage.removeItem(key)
-const getLocalStorage = (key, defaultValue) => {
-    const value = safeJSONParse(localStorage.getItem(key), defaultValue)
-    return (
-    value === null
-        ? defaultValue
-        : value
-    )
-}
+// Constants
 
-const STARTING_SECONDS = 25 //15 * 60 
+const STARTING_SECONDS = 25 //15 * 60
 const WORKOUT_OPTIONS = {
     legs: [
         {
@@ -243,8 +221,45 @@ const WORKOUT_OPTIONS = {
     ]
 }
 
+// Global vars
+
 let workOutType = undefined
 let intervalId = undefined
+let typeOfTrack = undefined
+let workoutTimer = undefined
+let numSecondsLeft = STARTING_SECONDS
+
+// Global functions
+
+const safeJSONParse = (str, defaultValue) => {         
+    let value = defaultValue
+    try {
+        value = JSON.parse(str)
+    } catch(err) {}
+    return value
+}
+const setLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+const removeLocalStorage = key => localStorage.removeItem(key)
+const getLocalStorage = (key, defaultValue) => {
+    const value = safeJSONParse(localStorage.getItem(key), defaultValue)
+    return (
+    value === null
+        ? defaultValue
+        : value
+    )
+}
+
+const logMyWorkout = () => {
+    let logHistory = getLocalStorage('logHistory',[])
+    const workoutLoging = {
+        date: Date.now(),
+        nameOfWorkout: workOutType,
+        howFarLeft: logTime(),
+    }
+    logHistory.push(workoutLoging)
+    setLocalStorage(`logHistory`, logHistory) 
+}
+
 const returnToHome = () => {
     document.querySelector('#screen-workout').classList.add('hide')
     document.querySelector('#screen-buttons').classList.remove('hide')
@@ -252,16 +267,17 @@ const returnToHome = () => {
 }
 
 const setClock = (numSecLeft) => {
-    clockTimer = `${Math.floor(numSecLeft / 60)}:${numSecLeft % 60}`
     let seconds = numSecLeft % 60
+    clockTimer = `${Math.floor(numSecLeft / 60)}:${numSecLeft % 60}`
     if(seconds <= 9){
         clockTimer = `${Math.floor(numSecLeft / 60)}:0${numSecLeft % 60}`
     }
     document.querySelector('#clock').innerHTML = clockTimer
 }
+
 const logTime = () => {
     const secondsDone = STARTING_SECONDS - numSecondsLeft
-    writeLog = `${Math.floor(secondsDone / 60)}:${secondsDone % 60}`
+    let writeLog = `${Math.floor(secondsDone / 60)}:${secondsDone % 60}`
     let seconds = secondsDone % 60
     if(seconds <= 9){
         writeLog = `${Math.floor(secondsDone / 60)}:0${secondsDone % 60}`
@@ -271,11 +287,8 @@ const logTime = () => {
     }
     return writeLog
 }
-let typeOfTrack = undefined
-let workoutTimer = undefined
-let numSecondsLeft = STARTING_SECONDS
 
-let startWorkoutFunction = (type) => {
+const startWorkoutFunction = (type) => {
     // console.log(type)
     if(type === "arms"){
         typeOfTrack = "arms"
@@ -304,7 +317,7 @@ let startWorkoutFunction = (type) => {
     /     \\
    /       \\
 
-`
+    `
     numSecondsLeft = STARTING_SECONDS
     setClock(numSecondsLeft)
     setTimeout(
@@ -352,19 +365,6 @@ let startWorkoutFunction = (type) => {
     ) 
 }
 
-const logMyWorkout = () => {
-    let logHistory = getLocalStorage('logHistory',[])
-    const workoutLoging = {
-        date: Date.now(),
-        nameOfWorkout: workOutType,
-        howFarLeft: logTime(),
-    }
-    logHistory.push(workoutLoging)
-    setLocalStorage(`logHistory`, logHistory) 
-}
-
-
-
 document.querySelector('#do-legs').addEventListener('click', 
     () => {
         workOutType = "legs"
@@ -397,7 +397,6 @@ document.querySelector('#view-log').addEventListener('click',
 
         const theHistory = (
             getLocalStorage('logHistory',[])
-
                 .map((aSpecificWorkout) => {
                     return `
                         <div>
@@ -419,6 +418,8 @@ document.querySelector('#back').addEventListener('click',
     }
 )
 
+// Initial actions
+
 document.querySelector('#stick-figure').innerHTML = `
      _____
     | ' ' |
@@ -435,6 +436,12 @@ document.querySelector('#stick-figure').innerHTML = `
 
 `
 
+setTimeout( 
+    () => {
+        document.querySelector('#screen-buttons').classList.remove('hide')  
+    },
+    300  
+)
         
     
 
