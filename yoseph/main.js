@@ -85,7 +85,7 @@ const calculations = () => {
 
 document.querySelector(`#savings-expense-enter`).addEventListener(`click`, () => {
     const amount = document.querySelector(`#savings-expense-amount`).value
-    if(!/^[0-9.]+$/.test(amount)) return
+    if(!/^-?[0-9.]+$/.test(amount)) return
     const history = getLocalStorage('history', [])
     const savingsHistoryItem = {
         description: document.querySelector(`#savings-expense-description`).value,
@@ -118,7 +118,7 @@ document.querySelector(`#pay-enter`).addEventListener(`click`, () => {
 
 document.querySelector(`#stupid-expense-enter`).addEventListener(`click`, () => {
     const amount = document.querySelector(`#stupid-expense-amount`).value
-    if(!/^[0-9.]+$/.test(amount)) return
+    if(!/^-?[0-9.]+$/.test(amount)) return
     const history = getLocalStorage('history', [])
     const stupidHistoryItem = {
         description: document.querySelector(`#stupid-expense-description`).value,
